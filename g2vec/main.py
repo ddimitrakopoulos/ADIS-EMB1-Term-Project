@@ -33,7 +33,9 @@ def mem_mb():
 # ==================================================
 # User input: dataset folder
 # ==================================================
-dataset_path = os.path.expanduser(input("Enter path to dataset folder (e.g., ~/study/datasets/IMDB-MULTI): ").strip())
+dataset_path = os.path.expanduser(
+    input("Enter path to dataset folder (e.g., ~/study/datasets/IMDB-MULTI): ").strip()
+)
 
 if not os.path.exists(dataset_path):
     raise FileNotFoundError(f"Dataset folder not found: {dataset_path}")
@@ -230,7 +232,7 @@ train_mem = mem_after_train - mem_before_train
 
 
 # ==================================================
-# Evaluation
+# Evaluation (FIXED AUC)
 # ==================================================
 y_pred = clf.predict(X_test)
 
@@ -247,8 +249,15 @@ print(f"Train memory (MB)    : {train_mem:.2f}")
 
 if classifier_choice in [1, 2, 3]:
     y_prob = clf.predict_proba(X_test)
-    auc = roc_auc_score(y_test, y_prob, multi_class="ovr")
-    print(f"AUC (OvR)            : {auc:.4f}")
+
+    if len(np.unique(y_test)) == 2:
+        # Binary classification (e.g. MUTAG)
+        auc = roc_auc_score(y_test, y_prob[:, 1])
+    else:
+        # Multi-class classification (e.g. IMDB-MULTI, ENZYMES)
+        auc = roc_auc_score(y_test, y_prob, multi_class="ovr")
+
+    print(f"AUC                  : {auc:.4f}")
 else:
     print("AUC                  : N/A (no probability estimates)")
 
