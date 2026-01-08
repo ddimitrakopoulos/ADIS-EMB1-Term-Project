@@ -1,0 +1,24 @@
+# Core packages
+numpy>=1.25,<1.27
+scipy>=1.10,<1.11
+pandas>=1.3,<1.5
+matplotlib>=3.5,<3.7
+seaborn>=0.12,<0.13
+networkx>=2.6,<3.0
+scikit-learn>=1.7,<1.8
+pillow>=12.0,<13.0
+
+# PyTorch and PyTorch Geometric
+torch==2.2.0
+torch-geometric==2.3.0
+
+# Graph and ML libraries
+karateclub>=1.3,<1.4
+PyGSP>=0.6,<0.7
+umap-learn>=0.5,<0.6
+gensim>=4.4,<4.5
+python-louvain>=0.16,<0.17
+
+# Utilities
+requests>=2.32,<2.33
+RapidFuzz>=3.14,<3.15
