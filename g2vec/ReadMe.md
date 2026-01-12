@@ -32,41 +32,43 @@ This repository contains a Python pipeline for **graph embedding, classification
 
 ## Running the Script
 
-Run the main script:
+The script is now run via command-line arguments. Example usage:
 
 ```bash
-python main.py
+python main.py --dataset <DATASET_PATH> [--mode <MODE>] [--classifier <CLASSIFIER>] [--dim <EMBED_DIM>]
 ```
 
-* You will be prompted to enter:
+- `--dataset` (required): Path to TUDataset folder (e.g., `../datasets/MUTAG`)
+- `--mode`: Which experiment to run. Options: `classify`, `cluster`, `stability`, `all` (default: `all`)
+- `--classifier`: Classifier to use. Options: `svm`, `logreg`, `mlp`, `knn` (default: `svm`)
+- `--dim`: Graph2Vec embedding dimension (default: `128`)
 
-  * Dataset folder path (e.g., `../datasets/MUTAG`)
-  * Classifier choice (SVM, Logistic Regression, MLP, k-NN)
-  * Graph2Vec embedding dimension (e.g., 64, 128, 256)
-* The script outputs:
+### Example
 
-  * Classification results (Accuracy, Macro-F1, AUC)
-  * Clustering results (ARI, t-SNE & UMAP plots)
-  * Optional stability analysis
+```bash
+python main.py --dataset ../datasets/MUTAG --mode all --classifier svm --dim 128
+```
+
+---
+
+## Output
+
+- Classification results (Accuracy, Macro-F1, AUC)
+- Clustering results (ARI, t-SNE & UMAP plots)
+- Optional stability analysis
 
 ---
 
 ## Stability Analysis
 
-* After classification and clustering, you will be prompted:
+If you run with `--mode stability` or `--mode all`, stability analysis will be performed after classification and clustering.
 
-  ```
-  Do you want to perform stability analysis? (y/n):
-  ```
+The script will:
+- Randomly perturb the graphs (add/remove edges, shuffle node labels)
+- Recompute embeddings
+- Compute **embedding stability score**
+- Evaluate **classification on perturbed embeddings**
 
-* If `y`, the script will:
-
-  * Randomly perturb the graphs (add/remove edges, shuffle node labels)
-  * Recompute embeddings
-  * Compute **embedding stability score**
-  * Evaluate **classification on perturbed embeddings**
-
-* You can run multiple stability trials interactively.
+You can control the number of trials and other parameters by editing environment variables in a `.env` file or via the code.
 
 ---
-
