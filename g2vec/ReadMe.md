@@ -59,16 +59,7 @@ python main.py --dataset ../datasets/MUTAG --mode all --classifier svm --dim 128
 
 ---
 
-## Stability Analysis
-
-If you run with `--mode stability` or `--mode all`, stability analysis will be performed after classification and clustering.
-
-The script will:
-- Randomly perturb the graphs (add/remove edges, shuffle node labels)
-- Recompute embeddings
-- Compute **embedding stability score**
-- Evaluate **classification on perturbed embeddings**
-
 You can control the number of trials and other parameters by editing environment variables in a `.env` file or via the code.
 
 ---
+
