@@ -30,6 +30,9 @@ This repository contains a Python pipeline for **graph embedding, classification
 
 ---
 
+## Modifications
+Before trying to run the script you shoul rename the `env` file to `.env`
+
 ## Running the Script
 
 The script is now run via command-line arguments. Example usage:
@@ -62,4 +65,5 @@ python main.py --dataset ../datasets/MUTAG --mode all --classifier svm --dim 128
 You can control the number of trials and other parameters by editing environment variables in a `.env` file or via the code.
 
 ---
+
 
