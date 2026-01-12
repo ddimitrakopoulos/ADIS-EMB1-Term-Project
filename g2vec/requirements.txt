@@ -5,3 +5,4 @@ scikit-learn==1.2.2
 matplotlib==3.5.3
 umap-learn==0.5.3
 psutil==7.2.1
+python-dotenv==1.2.1
