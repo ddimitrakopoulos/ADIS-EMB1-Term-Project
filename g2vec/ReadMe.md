@@ -8,10 +8,10 @@ This repository contains a Python pipeline for **graph embedding, classification
 
 ### Option 1: Using conda environment
 
-1. Create the environment from `env.yml`:
+1. Create the environment from `environment.yml`:
 
    ```bash
-   conda env create -f env.yml
+   conda env create -f environment.yml
    ```
 2. Activate the environment:
 
@@ -69,3 +69,4 @@ python main.py
 * You can run multiple stability trials interactively.
 
 ---
+
