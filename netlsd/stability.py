@@ -20,24 +20,43 @@ from karateclub import NetLSD
 # -----------------------------
 
 def load_dataset(dataset_name, root="data"):
-    dataset = TUDataset(root=root, name=dataset_name)
+    # Load from local TUDataset files (not torch_geometric)
+    import os
+    import networkx as nx
+    import numpy as np
+    dataset_dir = os.path.join(root)
+    edge_file = os.path.join(dataset_dir, f"{dataset_name}_A.txt")
+    indicator_file = os.path.join(dataset_dir, f"{dataset_name}_graph_indicator.txt")
+    label_file = os.path.join(dataset_dir, f"{dataset_name}_graph_labels.txt")
 
-    graphs = []
-    graph_labels = []
+    # Read edges
+    edges = []
+    with open(edge_file, "r") as f:
+        for line in f:
+            u, v = map(int, line.strip().split(","))
+            edges.append((u, v))
 
-    for data in dataset:
-        G = to_networkx(data, to_undirected=True)
+    # Read graph indicators
+    with open(indicator_file, "r") as f:
+        indicators = [int(line.strip()) for line in f]
+    num_graphs = max(indicators)
 
-        # Add node labels if they exist (MUTAG, ENZYMES)
-        if data.x is not None:
-            node_labels = data.x.argmax(dim=1).cpu().numpy()
-            for i, n in enumerate(G.nodes()):
-                G.nodes[n]["label"] = int(node_labels[i])
+    # Build graphs
+    graphs = [nx.Graph() for _ in range(num_graphs)]
+    node_id_to_graph = {}
+    for node_id, graph_id in enumerate(indicators, start=1):
+        graphs[graph_id - 1].add_node(node_id)
+        node_id_to_graph[node_id] = graphs[graph_id - 1]
+    for u, v in edges:
+        node_id_to_graph[u].add_edge(u, v)
 
-        graphs.append(G)
-        graph_labels.append(int(data.y))
+    # Relabel nodes to consecutive integers starting from 0
+    graphs = [nx.convert_node_labels_to_integers(g) for g in graphs]
 
-    return graphs, np.array(graph_labels)
+    # Read graph labels
+    with open(label_file, "r") as f:
+        labels = [int(line.strip()) for line in f]
+    return graphs, np.array(labels)
 
 
 # -----------------------------
@@ -175,14 +194,13 @@ def stability_analysis(graphs, orig_embeddings, dim=128, edge_perturb=0.05, shuf
 # -----------------------------
 # Run stability experiments
 # -----------------------------
-def run_stability(datasets=["MUTAG", "ENZYMES", "IMDB-MULTI"], dim=128,
-                  edge_perturb=0.05, shuffle_labels=False):
+def run_stability(datasets, dim=128, dataset_path=None, edge_perturb=0.05, shuffle_labels=False):
     results = {}
 
     for dataset_name in datasets:
         print(f"\n===== Dataset: {dataset_name} =====")
 
-        graphs, labels = load_dataset(dataset_name)
+        graphs, labels = load_dataset(dataset_name, root=dataset_path)
 
         # Original embeddings
         orig_embeddings, t, mem, peak = generate_netlsd_embeddings(graphs, dim=dim)
