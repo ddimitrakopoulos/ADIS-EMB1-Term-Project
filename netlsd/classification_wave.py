@@ -95,7 +95,7 @@ def load_dataset(dataset_name, root="data"):
 # Generate NetLSD embeddings
 # -----------------------------
 
-def generate_netlsd_embeddings(graphs, dim=128):
+def generate_netlsd_embeddings(graphs, dim=250):
     embeddings = []
 
     # track all memory allocations in Python 
@@ -135,7 +135,7 @@ def generate_netlsd_embeddings(graphs, dim=128):
         total_time / max(1, len(graphs)) # average time spent generating the NetLSD embedding per graph
     )
 
-def generate_netlsd_embeddings_wave(graphs, dim=128, kernel="heat"):
+def generate_netlsd_embeddings_wave(graphs, dim=250, kernel="heat"):
     """
     uses netlsd from PyPI not from KarateClub
     """
@@ -247,7 +247,7 @@ def evaluate_classifiers(X, y, classifier=None):
 # Main experiment loop
 # -----------------------------
 
-def run_classification_experiment(dataset_name, dataset_path, dim=128, classifier="svm", kernel="heat"):
+def run_classification_experiment(dataset_name, dataset_path, dim=250, classifier="svm", kernel="heat"):
     print(f"\n===== Dataset: {dataset_name} =====")
     graphs, labels = load_dataset(dataset_name, root=dataset_path)
 
