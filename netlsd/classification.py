@@ -93,7 +93,7 @@ def load_dataset(dataset_name, root="data"):
 # Generate NetLSD embeddings
 # -----------------------------
 
-def generate_netlsd_embeddings(graphs, dim=128):
+def generate_netlsd_embeddings(graphs, dim=250):
     embeddings = []
 
     # track all memory allocations in Python 
@@ -212,7 +212,7 @@ def evaluate_classifiers(X, y, classifier=None):
 # Main experiment loop
 # -----------------------------
 
-def run_classification_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
+def run_classification_experiment(dataset_name, dataset_path, dim=250, classifier="svm"):
     print(f"\n===== Dataset: {dataset_name} =====")
     graphs, labels = load_dataset(dataset_name, root=dataset_path)
 
