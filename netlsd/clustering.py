@@ -103,46 +103,41 @@ def visualize_embeddings(X, y, title="t-SNE", method="tsne"):
 # -----------------------------
 # Main clustering experiment
 # -----------------------------
-def run_clustering_experiment():
-    datasets = ["MUTAG", "ENZYMES", "IMDB-MULTI"]
-    embedding_dim = 128
-    results = {}
+def run_clustering_experiment(dataset_name, dataset_path, dim=128):
+    print(f"\n===== Dataset: {dataset_name} =====")
+    graphs, labels = load_dataset(dataset_name, root=dataset_path)
+    print(f"Number of graphs: {len(graphs)}")
 
-    for dataset_name in datasets:
-        print(f"\n===== Dataset: {dataset_name} =====")
-        graphs, labels = load_dataset(dataset_name)
-        print(f"Number of graphs: {len(graphs)}")
+    # Generate NetLSD embeddings
+    print("Generating NetLSD embeddings...")
+    X, total_time, embed_mem, peak_mem, avg_time = generate_netlsd_embeddings(graphs, dim=dim)
+    print(f"Embedding time (s): {total_time:.2f}, memory used: {embed_mem:.2f} MB, peak memory: {peak_mem:.2f} MB")
 
-        # Generate NetLSD embeddings
-        print("Generating NetLSD embeddings...")
-        X, total_time, embed_mem, peak_mem, avg_time = generate_netlsd_embeddings(graphs, dim=embedding_dim)
-        print(f"Embedding time (s): {total_time:.2f}, memory used: {embed_mem:.2f} MB, peak memory: {peak_mem:.2f} MB")
+    # -----------------------------
+    # K-Means clustering
+    # -----------------------------
+    print("Performing K-Means clustering...")
+    y_pred_km, ari_km = cluster_and_evaluate(X, labels, method="kmeans")
+    print(f"K-Means ARI: {ari_km:.4f}")
+    visualize_embeddings(X, y_pred_km, title=f"{dataset_name} - KMeans t-SNE", method="tsne")
+    visualize_embeddings(X, y_pred_km, title=f"{dataset_name} - KMeans UMAP", method="umap")
 
-        # -----------------------------
-        # K-Means clustering
-        # -----------------------------
-        print("Performing K-Means clustering...")
-        y_pred_km, ari_km = cluster_and_evaluate(X, labels, method="kmeans")
-        print(f"K-Means ARI: {ari_km:.4f}")
-        visualize_embeddings(X, y_pred_km, title=f"{dataset_name} - KMeans t-SNE", method="tsne")
-        visualize_embeddings(X, y_pred_km, title=f"{dataset_name} - KMeans UMAP", method="umap")
+    # -----------------------------
+    # Spectral clustering
+    # -----------------------------
+    print("Performing Spectral clustering...")
+    y_pred_sc, ari_sc = cluster_and_evaluate(X, labels, method="spectral")
+    print(f"Spectral ARI: {ari_sc:.4f}")
+    visualize_embeddings(X, y_pred_sc, title=f"{dataset_name} - Spectral t-SNE", method="tsne")
+    visualize_embeddings(X, y_pred_sc, title=f"{dataset_name} - Spectral UMAP", method="umap")
 
-        # -----------------------------
-        # Spectral clustering
-        # -----------------------------
-        print("Performing Spectral clustering...")
-        y_pred_sc, ari_sc = cluster_and_evaluate(X, labels, method="spectral")
-        print(f"Spectral ARI: {ari_sc:.4f}")
-        visualize_embeddings(X, y_pred_sc, title=f"{dataset_name} - Spectral t-SNE", method="tsne")
-        visualize_embeddings(X, y_pred_sc, title=f"{dataset_name} - Spectral UMAP", method="umap")
-
-        results[dataset_name] = {
-            "embedding_dim": embedding_dim,
-            "embedding_time_sec": total_time,
-            "embedding_memory_mb": embed_mem,
-            "kmeans_ari": ari_km,
-            "spectral_ari": ari_sc
-        }
+    results = {
+        "embedding_dim": dim,
+        "embedding_time_sec": total_time,
+        "embedding_memory_mb": embed_mem,
+        "kmeans_ari": ari_km,
+        "spectral_ari": ari_sc
+    }
 
     return results
 

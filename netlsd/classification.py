@@ -32,17 +32,42 @@ def load_dataset(dataset_name, root="data"):
     which KarateClub’s NetLSD expects.
 
     """
-    dataset = TUDataset(root=root, name=dataset_name) # PyG dataset
-    graphs = [] # NetworkX graphs
-    labels = [] # graph labels
+    # Load from local TUDataset files (not torch_geometric)
+    import os
+    import networkx as nx
+    import numpy as np
+    dataset_dir = os.path.join(root)
+    edge_file = os.path.join(dataset_dir, f"{dataset_name}_A.txt")
+    indicator_file = os.path.join(dataset_dir, f"{dataset_name}_graph_indicator.txt")
+    label_file = os.path.join(dataset_dir, f"{dataset_name}_graph_labels.txt")
 
-    for data in dataset: # loops over each graph in the dataset
-        g = to_networkx(data, to_undirected=True) 
-        # to_undirected=True ensures edges are undirected, which NetLSD expects.
-        graphs.append(g)
-        labels.append(int(data.y)) # graph label in data.y
+    # Read edges
+    edges = []
+    with open(edge_file, "r") as f:
+        for line in f:
+            u, v = map(int, line.strip().split(","))
+            edges.append((u, v))
 
-    # returns also NumPy array of graph labels, ready for classifiers
+    # Read graph indicators
+    with open(indicator_file, "r") as f:
+        indicators = [int(line.strip()) for line in f]
+    num_graphs = max(indicators)
+
+    # Build graphs
+    graphs = [nx.Graph() for _ in range(num_graphs)]
+    node_id_to_graph = {}
+    for node_id, graph_id in enumerate(indicators, start=1):
+        graphs[graph_id - 1].add_node(node_id)
+        node_id_to_graph[node_id] = graphs[graph_id - 1]
+    for u, v in edges:
+        node_id_to_graph[u].add_edge(u, v)
+
+    # Relabel nodes to consecutive integers starting from 0
+    graphs = [nx.convert_node_labels_to_integers(g) for g in graphs]
+
+    # Read graph labels
+    with open(label_file, "r") as f:
+        labels = [int(line.strip()) for line in f]
     return graphs, np.array(labels)
 
 
@@ -93,10 +118,11 @@ def generate_netlsd_embeddings(graphs, dim=128):
 # Classification using SVM, MLP, Logistic Regression, KNN
 # -----------------------------
 
-def evaluate_classifiers(X, y):
+def evaluate_classifiers(X, y, classifier=None):
     """
     X  -> feature matrix: embeddings from NetLSD, shape (num_graphs, dim)
     y  -> graph labels: actual labels from the dataset, shape (num_graphs,)
+    classifier -> only train and evaluate this classifier if specified
     """
 
     # 80% of graphs go into training, 20% into testing
@@ -106,30 +132,31 @@ def evaluate_classifiers(X, y):
     )
 
     classifiers = {
-        "SVM": Pipeline([
+        "svm": Pipeline([
             ("scaler", StandardScaler()),
             ("svm", SVC(kernel="rbf", probability=True, random_state=42))
         ]),
-        "LogisticRegression": Pipeline([
+        "logreg": Pipeline([
             ("scaler", StandardScaler()),
             ("lr", LogisticRegression(max_iter=500, random_state=42))
         ]),
-        "MLP": Pipeline([
+        "mlp": Pipeline([
             ("scaler", StandardScaler()),
             ("mlp", MLPClassifier(hidden_layer_sizes=(128, 64),
                                   max_iter=500,
                                   random_state=42))
         ]),
-        "KNN": Pipeline([
+        "knn": Pipeline([
             ("scaler", StandardScaler()),
             ("knn", KNeighborsClassifier(n_neighbors=5))
         ])
     }
 
     results = {}
-
-    for clf_name, clf in classifiers.items():
-        print(f"\nTraining {clf_name}...")
+    clf_names = [classifier] if classifier else classifiers.keys()
+    for clf_name in clf_names:
+        clf = classifiers[clf_name]
+        print(f"\nTraining {clf_name.upper()}...")
         start_time = time.time()
         clf.fit(X_train, y_train)
         train_time = time.time() - start_time
@@ -153,7 +180,7 @@ def evaluate_classifiers(X, y):
             except:
                 auc = None
 
-        results[clf_name] = {
+        results[clf_name.upper()] = {
             "accuracy": acc,
             "f1": f1,
             "auc": auc,
@@ -166,43 +193,29 @@ def evaluate_classifiers(X, y):
 # Main experiment loop
 # -----------------------------
 
-def run_experiment():
-    datasets = ["MUTAG", "ENZYMES", "IMDB-MULTI"]
-    embedding_dim = 128
-    results = {}
+def run_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
+    print(f"\n===== Dataset: {dataset_name} =====")
+    graphs, labels = load_dataset(dataset_name, root=dataset_path)
 
-    for dataset_name in datasets:
-        print(f"\n===== Dataset: {dataset_name} =====")
-        graphs, labels = load_dataset(dataset_name)
+    print("Generating NetLSD embeddings...")
+    embeddings, total_time, embed_mem, peak_mem, avg_time_per_graph = generate_netlsd_embeddings(
+        graphs, dim=dim
+    )        
+    print(f"Total embedding time (s)       : {total_time:.2f}")
+    print(f"Embedding memory usage (MB) : {embed_mem:.2f}")
+    print(f"Peak embedding memory (MB)     : {peak_mem:.2f}")
+    print(f"Average embedding time/graph (s): {avg_time_per_graph:.4f}")
 
-        print("Generating NetLSD embeddings...")
-        embeddings, total_time, embed_mem, peak_mem, avg_time_per_graph = generate_netlsd_embeddings(
-            graphs, dim=embedding_dim
-        )        
-        print(f"Total embedding time (s)       : {total_time:.2f}")
-        print(f"Embedding memory usage (MB) : {embed_mem:.2f}")
-        print(f"Peak embedding memory (MB)     : {peak_mem:.2f}")
-        print(f"Average embedding time/graph (s): {avg_time_per_graph:.4f}")
+    print("Training classifier...")
+    metrics = evaluate_classifiers(embeddings, labels, classifier=classifier)
 
-        print("Training classifiers...")
-        metrics = evaluate_classifiers(embeddings, labels)
+    print(f"\nResults for {dataset_name}:")
+    clf_metrics = metrics.get(classifier.upper())
+    print(f"  {classifier.upper()}:")
+    for k, v in clf_metrics.items():
+        print(f"    {k}: {v}")
 
-        results[dataset_name] = {
-            "embedding_dim": embedding_dim,
-            "embedding_time_sec": total_time,
-            "embedding_memory_mb": embed_mem,  # X.nbytes in MB
-            "embedding_peak_memory_mb": peak_mem,
-            "avg_embedding_time_per_graph_sec": avg_time_per_graph,
-            "classifiers": metrics
-        }
-
-        print(f"\nResults for {dataset_name}:")
-        for clf_name, clf_metrics in metrics.items():
-            print(f"  {clf_name}:")
-            for k, v in clf_metrics.items():
-                print(f"    {k}: {v}")
-
-    return results
+    return metrics
 
 # -----------------------------
 # Run
