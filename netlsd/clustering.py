@@ -93,7 +93,7 @@ def load_dataset(dataset_name, root="data"):
 # -----------------------------
 # Generate NetLSD embeddings
 # -----------------------------
-def generate_netlsd_embeddings(graphs, dim=128):
+def generate_netlsd_embeddings(graphs, dim=250):
     embeddings = []
     tracemalloc.start()
     start_time = time.time()
@@ -220,7 +220,7 @@ def visualize_3d(X, clusters, title, method="tsne"):
 # -----------------------------
 # Main experiment
 # -----------------------------
-def run_clustering_experiment(dataset_name, dataset_path, dim=128, do_visualize=False):
+def run_clustering_experiment(dataset_name, dataset_path, dim=250, do_visualize=False):
     print(f"\n===== Dataset: {dataset_name} =====")
     graphs, labels = load_dataset(dataset_name, dataset_path)
 
