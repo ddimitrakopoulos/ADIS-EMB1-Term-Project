@@ -8,8 +8,6 @@ import tracemalloc
 
 from tqdm import tqdm
 from karateclub import NetLSD
-from torch_geometric.datasets import TUDataset
-from torch_geometric.utils import to_networkx
 
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -20,26 +18,24 @@ from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
-
 # -----------------------------
 # Load dataset and convert to NetworkX
 # -----------------------------
 
 def load_dataset(dataset_name, root="data"):
     """
-    Loads a graph dataset from PyTorch Geometric 
-    and converts it to NetworkX objects, 
-    which KarateClub’s NetLSD expects.
-
+    Loads a graph dataset manually from the provided TUDataset files
+    and converts it to NetworkX objects, which KarateClub’s NetLSD expects.
+    Supports MUTAG, ENZYMES, and IMDB-MULTI formats.
     """
-    # Load from local TUDataset files (not torch_geometric)
-    import os
-    import networkx as nx
-    import numpy as np
     dataset_dir = os.path.join(root)
     edge_file = os.path.join(dataset_dir, f"{dataset_name}_A.txt")
     indicator_file = os.path.join(dataset_dir, f"{dataset_name}_graph_indicator.txt")
     label_file = os.path.join(dataset_dir, f"{dataset_name}_graph_labels.txt")
+
+    # Optional files
+    node_label_file = os.path.join(dataset_dir, f"{dataset_name}_node_labels.txt")
+    node_attr_file = os.path.join(dataset_dir, f"{dataset_name}_node_attributes.txt")
 
     # Read edges
     edges = []
@@ -59,6 +55,8 @@ def load_dataset(dataset_name, root="data"):
     for node_id, graph_id in enumerate(indicators, start=1):
         graphs[graph_id - 1].add_node(node_id)
         node_id_to_graph[node_id] = graphs[graph_id - 1]
+
+    # Add edges
     for u, v in edges:
         node_id_to_graph[u].add_edge(u, v)
 
@@ -68,6 +66,26 @@ def load_dataset(dataset_name, root="data"):
     # Read graph labels
     with open(label_file, "r") as f:
         labels = [int(line.strip()) for line in f]
+
+    # Optional: attach node labels or attributes if available
+    if os.path.exists(node_label_file):
+        with open(node_label_file, "r") as f:
+            node_labels = [line.strip() for line in f]
+        # assign node labels to graphs
+        node_counter = 0
+        for g in graphs:
+            for n in g.nodes():
+                g.nodes[n]["label"] = node_labels[node_counter]
+                node_counter += 1
+
+    if os.path.exists(node_attr_file):
+        node_attrs = np.loadtxt(node_attr_file, delimiter=",")
+        node_counter = 0
+        for g in graphs:
+            for n in g.nodes():
+                g.nodes[n]["attr"] = node_attrs[node_counter]
+                node_counter += 1
+
     return graphs, np.array(labels)
 
 
@@ -87,14 +105,15 @@ def generate_netlsd_embeddings(graphs, dim=128):
     for g in graphs:
         num_nodes = g.number_of_nodes()
         # avoid errors for small graphs based on how eigenvalues are calculated at the karateclub impl of netlsd
+        
         if num_nodes < 6: 
             # there are only 4 graphs in enzymes dataset with less than 6 nodes 
             # so this doesnt affect the accuracy output much
             embeddings.append(np.zeros(dim))
             continue
-        # choose a reasonable number of eigenvalues to be calculated based on the graph size
-        approximations = max(1, min(200, (num_nodes - 2) // 2)) 
-        model = NetLSD(scale_steps=dim, approximations=approximations)
+        '''# choose a reasonable number of eigenvalues to be calculated based on the graph size
+        approximations = max(1, min(200, (num_nodes - 2) // 2)) '''
+        model = NetLSD(scale_steps=dim) #, approximations=approximations)
         model.fit([g])
         embeddings.append(model.get_embedding()[0])
 
@@ -193,7 +212,7 @@ def evaluate_classifiers(X, y, classifier=None):
 # Main experiment loop
 # -----------------------------
 
-def run_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
+def run_classification_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
     print(f"\n===== Dataset: {dataset_name} =====")
     graphs, labels = load_dataset(dataset_name, root=dataset_path)
 
@@ -201,8 +220,15 @@ def run_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
     embeddings, total_time, embed_mem, peak_mem, avg_time_per_graph = generate_netlsd_embeddings(
         graphs, dim=dim
     )        
+
+    ''' debugging info
+    print("NetLSD embeddings (first few graphs):")
+    for i, emb in enumerate(embeddings[:10]):
+        print(f"Graph {i}: {emb}")
+    '''
+
     print(f"Total embedding time (s)       : {total_time:.2f}")
-    print(f"Embedding memory usage (MB) : {embed_mem:.2f}")
+    print(f"Embedding memory usage (MB)    : {embed_mem:.2f}")
     print(f"Peak embedding memory (MB)     : {peak_mem:.2f}")
     print(f"Average embedding time/graph (s): {avg_time_per_graph:.4f}")
 
@@ -216,10 +242,3 @@ def run_experiment(dataset_name, dataset_path, dim=128, classifier="svm"):
         print(f"    {k}: {v}")
 
     return metrics
-
-# -----------------------------
-# Run
-# -----------------------------
-
-if __name__ == "__main__":
-    run_experiment()
