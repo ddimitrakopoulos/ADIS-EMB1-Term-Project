@@ -4,7 +4,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 import os
 import argparse
 
-from classification import run_experiment as run_classification_experiment
+from classification import run_classification_experiment
 from clustering import run_clustering_experiment
 from stability import run_stability
 
@@ -27,6 +27,12 @@ parser.add_argument("--classifier", type=str, default="svm",
 parser.add_argument("--dim", type=int, default=128,
                     help="NetLSD embedding dimension")
 
+parser.add_argument("--perturb", type=float, default=0.05,
+                    help="Edge perturbation ratio for stability analysis (e.g. 0.05 = 5%% edges)")
+
+parser.add_argument("--visualize", action="store_true",
+                    help="Visualize clustering results (scatter plots, etc.)")
+
 args = parser.parse_args()
 
 # ==================================================
@@ -46,10 +52,10 @@ if args.mode in ["classify", "all"]:
 
 if args.mode in ["cluster", "all"]:
     print("\nRunning clustering experiment...")
-    run_clustering_experiment(dataset_name=dataset_name, dataset_path=dataset_path, dim=args.dim)
+    run_clustering_experiment(dataset_name=dataset_name, dataset_path=dataset_path, dim=args.dim, do_visualize=args.visualize)
 
 if args.mode in ["stability", "all"]:
     print("\nRunning stability experiment...")
-    run_stability(datasets=[dataset_name], dim=args.dim, dataset_path=dataset_path)
+    run_stability(datasets=[dataset_name], dim=args.dim, dataset_path=dataset_path, edge_perturb=args.perturb)
 
 print("\nDone.")
