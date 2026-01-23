@@ -264,7 +264,7 @@ def stability_analysis(graphs, X_orig, y, dim, edge_perturb):
 # Run experiment
 # --------------------------------------------------
 
-def run_stability(datasets, dim=250, dataset_path, edge_perturb=0.05):
+def run_stability(datasets, dataset_path, dim=250, edge_perturb=0.05):
     for name in datasets:
         print(f"\n===== Dataset: {name} =====")
 
