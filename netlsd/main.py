@@ -24,7 +24,7 @@ parser.add_argument("--classifier", type=str, default="svm",
                     choices=["svm", "logreg", "mlp", "knn"],
                     help="Classifier to use (for classification mode)")
 
-parser.add_argument("--dim", type=int, default=128,
+parser.add_argument("--dim", type=int, default=250,
                     help="NetLSD embedding dimension")
 
 parser.add_argument("--perturb", type=float, default=0.05,
