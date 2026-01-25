@@ -1,0 +1,44 @@
+=======================================
+Testing different approximation values 
+=======================================
+EMB_SIZE = 128 (arbitrary)
+
+ENZYMES [2, 4, 8, 15, 20, 30, 40, 45, 50] (max 126) 
+(keep only the highest acc and lowest gen_time)
+
+appr = 2
+acc : 0.3
+gen_time: 4.32
+
+appr = 4
+acc : 0.35
+gen_time: 3.94
+
+appr = 8
+acc : 
+gen_time: 
+
+appr = 15
+acc : 
+gen_time: 
+
+appr = 20
+acc : 
+gen_time: 
+
+appr = 30
+acc : 
+gen_time: 
+
+appr = 40
+acc : 
+gen_time: 
+
+
+appr = 45
+acc : 
+gen_time: 
+
+appr = 50
+acc : 
+gen_time: 

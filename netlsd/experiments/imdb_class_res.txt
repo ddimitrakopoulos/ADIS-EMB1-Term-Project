@@ -1,0 +1,126 @@
+=======================================
+Testing different approximation values 
+=======================================
+EMB_SIZE = 128 (arbitrary)
+
+IMDB-MULTI [2, 4, 8, 12, 15, 20, 25, 30] (max 89) 
+(keep only the highest acc and lowest gen_time)
+
+appr = 2
+acc : --ERROR--
+gen_time: --ERROR--
+
+appr = 4
+acc : --ERROR--
+gen_time: --ERROR--
+
+appr = 8
+acc : 0.44666666666666666
+gen_time: 6.42
+
+appr = 16
+acc :  0.43666666666666665
+gen_time: 6.36
+
+appr = 20
+acc : 0.44
+gen_time: 6.43
+
+appr = 25
+acc : 0.43333333333333335
+gen_time: 6.24
+
+appr = 30
+acc :  0.4533333333333333
+gen_time: 6.26
+
+appr = 200 def (num_nodes full)
+acc : 0.43333333333333335
+gen_time: 6.20
+
+keep appr = 30 since time metrics are not differing much
+========================
+Varying embedding size
+========================
+keep the average results of classification accuracy + time/memory for each option  
+
+emb_size = 2 
+    accuracy: 0.42333333333333334
+    f1: 0.3954473006850843
+    auc: 0.5680166666666667
+    train_time: 0.00416111946105957
+Total embedding time (s)       : 3.92
+Embedding memory usage (MB)    : 0.02
+Peak embedding memory (MB)     : 1.88
+Average embedding time/graph (s): 0.0026
+
+emb_size = 4
+ accuracy: 0.44
+    f1: 0.42512703537046964
+    auc: 0.59845
+    train_time: 0.25020503997802734
+Total embedding time (s)       : 3.92
+Embedding memory usage (MB)    : 0.05
+Peak embedding memory (MB)     : 1.83
+Average embedding time/graph (s): 0.0026
+
+emb_size = 8
+accuracy: 0.43666666666666665
+    f1: 0.40942227108814766
+    auc: 0.6265833333333334
+    train_time: 0.017133712768554688
+Total embedding time (s)       : 4.03
+Embedding memory usage (MB)    : 0.09
+Peak embedding memory (MB)     : 1.92
+Average embedding time/graph (s): 0.0027
+
+emb_size = 16
+accuracy: 0.43
+    f1: 0.41330107780662423
+    auc: 0.5899666666666666
+    train_time: 0.3124663829803467
+Total embedding time (s)       : 4.17
+Embedding memory usage (MB)    : 0.18
+Peak embedding memory (MB)     : 2.21
+Average embedding time/graph (s): 0.0028
+
+emb_size = 32
+accuracy: 0.44
+    f1: 0.42165603658777284
+    auc: 0.58425
+    train_time: 2.0483572483062744
+Total embedding time (s)       : 4.94
+Embedding memory usage (MB)    : 0.37
+Peak embedding memory (MB)     : 2.57
+Average embedding time/graph (s): 0.0033
+
+emb_size = 64
+accuracy: 0.43
+    f1: 0.41330107780662423
+    auc: 0.5930166666666666
+    train_time: 0.39601564407348633
+Total embedding time (s)       : 5.22
+Embedding memory usage (MB)    : 0.73
+Peak embedding memory (MB)     : 3.32
+Average embedding time/graph (s): 0.0035
+
+emb_size = 128
+accuracy: 0.4488883333333333
+    f1: 0.4276147900380305
+    auc: 0.5941416666666668
+    train_time: 0.7706761360168457
+Total embedding time (s)       : 6.38
+Embedding memory usage (MB)    : 1.46
+Peak embedding memory (MB)     : 4.78
+Average embedding time/graph (s): 0.0043
+
+emb_size = 256
+accuracy: 0.44333333333333336
+    f1: 0.418687054171422
+    auc: 0.5819416666666667
+    train_time: 2.002784490585327
+Total embedding time (s)       : 9.22
+Embedding memory usage (MB)    : 2.93
+Peak embedding memory (MB)     : 7.70
+Average embedding time/graph (s): 0.0061
+ 
