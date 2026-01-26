@@ -10,7 +10,8 @@ Modified GIN Architecture
 - ENZYMES has node_attributes, which are now being utilized compared to the other methods, so the acc is pretty chopped.
 - kudos to [](https://colab.research.google.com/drive/1b6SWugNKnxsI0L9auX1zwszlXf3rRZyS?usp=sharing#scrollTo=1YsYYubhTE22)
 
-Wake up in the morning feeling like P Diddy
-Grab my glasses, I'm out the door, I'm gonna hit this city
-Before I leave, brush my teeth with a bottle of GIN
+Wake up in the morning feeling like P Diddy<br>
+Grab my glasses, I'm out the door, I'm gonna hit this city<br>
+Before I leave, brush my teeth with a bottle of GIN<br>
 'Cause when I leave for the night, I ain't coming back
+
