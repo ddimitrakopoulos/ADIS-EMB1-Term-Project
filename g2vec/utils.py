@@ -44,25 +44,48 @@ def load_tudataset(dataset_path):
 # ==================================================
 # Perturb a graph for stability analysis
 # ==================================================
-def perturb_graph(G, edge_perturb_ratio=0.1, shuffle_node_labels=True):
+def perturb_graph(G, edge_perturb_ratio=0.1, mode='both', shuffle_node_labels=False):
+
     G_perturbed = copy.deepcopy(G)
-    num_edges = G_perturbed.number_of_edges()
-    num_remove = int(edge_perturb_ratio * num_edges)
     edges = list(G_perturbed.edges())
-    edges_to_remove = random.sample(edges, min(num_remove, len(edges)))
-    G_perturbed.remove_edges_from(edges_to_remove)
     nodes = list(G_perturbed.nodes())
-    added = 0
-    while added < num_remove:
-        u, v = random.sample(nodes, 2)
-        if not G_perturbed.has_edge(u, v):
-            G_perturbed.add_edge(u, v)
-            added += 1
+    
+    if len(nodes) < 2:
+        return G_perturbed
+    
+    num_edges = len(edges)
+    num_perturb = max(1, int(num_edges * edge_perturb_ratio)) if num_edges > 0 else 0
+    
+    # Remove edges
+    if mode in ['remove', 'both'] and num_edges > 0:
+        num_to_remove = min(num_perturb, len(edges))
+        for _ in range(num_to_remove):
+            if len(edges) == 0:
+                break
+            e = random.choice(edges)
+            if G_perturbed.has_edge(*e):
+                G_perturbed.remove_edge(*e)
+            edges.remove(e)
+    
+    # Add edges
+    if mode in ['add', 'both']:
+        added = 0
+        max_attempts = num_perturb * 100
+        attempts = 0
+        while added < num_perturb and attempts < max_attempts:
+            u, v = random.sample(nodes, 2)
+            if not G_perturbed.has_edge(u, v):
+                G_perturbed.add_edge(u, v)
+                added += 1
+            attempts += 1
+    
+    # Shuffle node labels (for GIN-style perturbation)
     if shuffle_node_labels and nx.get_node_attributes(G_perturbed, "label"):
         labels = list(nx.get_node_attributes(G_perturbed, "label").values())
         random.shuffle(labels)
         for i, node in enumerate(G_perturbed.nodes()):
             G_perturbed.nodes[node]["label"] = labels[i]
+    
     return G_perturbed
 
 # ==================================================
@@ -78,3 +101,9 @@ def scale_features(X_train, X_test):
 def embedding_stability(X_original, X_perturbed):
     sim = np.diag(cosine_similarity(X_original, X_perturbed))
     return np.mean(sim)
+
+def edge_jaccard(G, Gp):
+    E1, E2 = set(G.edges()), set(Gp.edges())
+    if len(E1 | E2) == 0:
+        return 1.0
+    return len(E1 & E2) / len(E1 | E2)

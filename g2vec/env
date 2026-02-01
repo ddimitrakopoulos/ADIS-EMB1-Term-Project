@@ -1,20 +1,36 @@
 # ==================================================
 # Graph2Vec settings
 # ==================================================
-G2V_WL_ITER=3
-G2V_EPOCHS=40
-G2V_LR=0.025
+G2V_WL_ITER=5
+G2V_EPOCHS=10000
+G2V_LR=0.015
 G2V_SEED=42
 
 # ==================================================
 # Classifier hyperparameters
 # ==================================================
-SVM_C=1.0
-LOGREG_C=1.0
-MLP_HIDDEN_LAYER_SIZES=128,128
-MLP_MAX_ITER=500
+# SVM
+SVM_C=75
+SVM_KERNEL=rbf
+SVM_GAMMA=scale
+SVM_MAX_ITER=3000
+
+# Logistic Regression
+LOGREG_C=3
+LOGREG_MAX_ITER=3000
+LOGREG_SOLVER=lbfgs
+
+# MLP
+MLP_HIDDEN_LAYER_SIZES=512,256
+MLP_MAX_ITER=2000
 MLP_EARLY_STOPPING=True
-KNN_N_NEIGHBORS=5
+MLP_ACTIVATION=relu
+MLP_LEARNING_RATE_INIT=0.001
+
+# KNN
+KNN_N_NEIGHBORS=2
+KNN_WEIGHTS=distance
+KNN_METRIC=minkowski
 
 # ==================================================
 # Train/Test split
