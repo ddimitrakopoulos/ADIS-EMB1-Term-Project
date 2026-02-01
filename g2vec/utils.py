@@ -79,12 +79,22 @@ def perturb_graph(G, edge_perturb_ratio=0.1, mode='both', shuffle_node_labels=Fa
                 added += 1
             attempts += 1
     
+    # mode='none' skips edge perturbation (used for label-only shuffling)
+    
     # Shuffle node labels (for GIN-style perturbation)
+    # Shuffle proportionally to edge_perturb_ratio
     if shuffle_node_labels and nx.get_node_attributes(G_perturbed, "label"):
-        labels = list(nx.get_node_attributes(G_perturbed, "label").values())
-        random.shuffle(labels)
-        for i, node in enumerate(G_perturbed.nodes()):
-            G_perturbed.nodes[node]["label"] = labels[i]
+        labels_dict = nx.get_node_attributes(G_perturbed, "label")
+        node_list = list(G_perturbed.nodes())
+        n_to_shuffle = max(2, int(len(node_list) * edge_perturb_ratio))
+        n_to_shuffle = min(n_to_shuffle, len(node_list))
+        
+        # Pick random subset of nodes to shuffle labels among
+        shuffle_nodes = random.sample(node_list, n_to_shuffle)
+        shuffle_labels_list = [labels_dict[n] for n in shuffle_nodes]
+        random.shuffle(shuffle_labels_list)
+        for i, n in enumerate(shuffle_nodes):
+            G_perturbed.nodes[n]["label"] = shuffle_labels_list[i]
     
     return G_perturbed
 

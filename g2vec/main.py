@@ -28,7 +28,8 @@ Examples:
   # Run stability analysis (remove 10%% edges)
   python main.py --dataset ../datasets/MUTAG --mode stability --permute_pct 0.1 --perturb_mode remove
 
-  # Run full stability analysis (5%%, 10%%, 15%%, 20%%, 25%%, 30%% for add and remove)
+  # Run full stability analysis (tests add, remove, both, shuffle at 0-30%%)
+  # Generates stability_analysis.png with embedding stability and accuracy curves
   python main.py --dataset ../datasets/MUTAG --mode stability --full_stability
 
   # Run all experiments with 10 repetitions
@@ -64,7 +65,7 @@ parser.add_argument("--shuffle_labels", action='store_true',
                     help="Shuffle node labels during perturbation (GIN-style). Default: False")
 
 parser.add_argument("--full_stability", action='store_true',
-                    help="Run full stability analysis with all perturbation levels (5%%, 10%%, 15%%, 20%%, 25%%, 30%%) for both add and remove modes")
+                    help="Run full stability analysis: tests add, remove, both, and shuffle at 0-30%%. Saves stability_analysis.png")
 
 parser.add_argument('--3d', action='store_true',
                     help='Plot t-SNE and UMAP visualizations in 3D. Default: 2D')
