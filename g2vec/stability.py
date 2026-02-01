@@ -66,8 +66,8 @@ def run_full_stability_analysis(graphs, X, clf, y, train_idx, test_idx, dim, see
     results = []
     
     # Storage for plotting curves
-    emb_curves = {'add': [], 'remove': [], 'both': [], 'shuffle': []}
-    acc_curves = {'add': [], 'remove': [], 'both': [], 'shuffle': []}
+    emb_curves = {'add': [], 'remove': [], 'shuffle': [], 'all': []}
+    acc_curves = {'add': [], 'remove': [], 'shuffle': [], 'all': []}
     
     print(f"\n{'='*80}")
     print(f"STABILITY ANALYSIS")
@@ -113,27 +113,8 @@ def run_full_stability_analysis(graphs, X, clf, y, train_idx, test_idx, dim, see
             acc_curves['add'].append(result['accuracy'])
             print(f"{pct*100:>5.0f}%   {result['embedding_stability']:<15.4f} {result['edge_jaccard']:<15.4f} {result['accuracy']:<12.4f} {result['accuracy_drop']:<12.4f}")
     
-    # Test both (Mixed: remove and add edges)
-    print(f"\n--- MIXED (ADD + DROP EDGES) ---")
-    print(f"{'Pct':<8} {'Emb Stability':<15} {'Edge Jaccard':<15} {'Accuracy':<12} {'Acc Drop':<12}")
-    print("-" * 62)
-    for pct in perturbation_levels:
-        if pct == 0.0:
-            emb_curves['both'].append(1.0)
-            acc_curves['both'].append(orig_acc)
-            print(f"{pct*100:>5.0f}%   {1.0:<15.4f} {1.0:<15.4f} {orig_acc:<12.4f} {0.0:<12.4f}")
-        else:
-            result = run_stability(
-                graphs, X, clf, y, train_idx, test_idx, dim, seed,
-                permute_pct=pct, mode='both', shuffle_labels=False, orig_acc=orig_acc
-            )
-            results.append(result)
-            emb_curves['both'].append(result['embedding_stability'])
-            acc_curves['both'].append(result['accuracy'])
-            print(f"{pct*100:>5.0f}%   {result['embedding_stability']:<15.4f} {result['edge_jaccard']:<15.4f} {result['accuracy']:<12.4f} {result['accuracy_drop']:<12.4f}")
-    
-    # Test shuffle features (label shuffling only, no edge perturbation)
-    print(f"\n--- SHUFFLE FEATURES ---")
+    # Test shuffle labels only (no edge perturbation)
+    print(f"\n--- SHUFFLE LABELS ---")
     print(f"{'Pct':<8} {'Emb Stability':<15} {'Edge Jaccard':<15} {'Accuracy':<12} {'Acc Drop':<12}")
     print("-" * 62)
     for pct in perturbation_levels:
@@ -151,6 +132,25 @@ def run_full_stability_analysis(graphs, X, clf, y, train_idx, test_idx, dim, see
             acc_curves['shuffle'].append(result['accuracy'])
             print(f"{pct*100:>5.0f}%   {result['embedding_stability']:<15.4f} {result['edge_jaccard']:<15.4f} {result['accuracy']:<12.4f} {result['accuracy_drop']:<12.4f}")
     
+    # Test all three (add + remove edges + shuffle labels)
+    print(f"\n--- ALL (ADD + DROP EDGES + SHUFFLE LABELS) ---")
+    print(f"{'Pct':<8} {'Emb Stability':<15} {'Edge Jaccard':<15} {'Accuracy':<12} {'Acc Drop':<12}")
+    print("-" * 62)
+    for pct in perturbation_levels:
+        if pct == 0.0:
+            emb_curves['all'].append(1.0)
+            acc_curves['all'].append(orig_acc)
+            print(f"{pct*100:>5.0f}%   {1.0:<15.4f} {1.0:<15.4f} {orig_acc:<12.4f} {0.0:<12.4f}")
+        else:
+            result = run_stability(
+                graphs, X, clf, y, train_idx, test_idx, dim, seed,
+                permute_pct=pct, mode='both', shuffle_labels=True, orig_acc=orig_acc
+            )
+            results.append(result)
+            emb_curves['all'].append(result['embedding_stability'])
+            acc_curves['all'].append(result['accuracy'])
+            print(f"{pct*100:>5.0f}%   {result['embedding_stability']:<15.4f} {result['edge_jaccard']:<15.4f} {result['accuracy']:<12.4f} {result['accuracy_drop']:<12.4f}")
+    
     print(f"\n{'='*80}")
     print(f"Original Accuracy: {orig_acc:.4f}")
     print(f"{'='*80}")
@@ -161,10 +161,10 @@ def run_full_stability_analysis(graphs, X, clf, y, train_idx, test_idx, dim, see
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
     # Left: Embedding Stability (Cosine Sim)
-    ax1.plot(pct_vals, emb_curves['add'], marker='o', color='blue', linewidth=2, label='Add Edges')
     ax1.plot(pct_vals, emb_curves['remove'], marker='s', color='red', linewidth=2, label='Drop Edges')
-    ax1.plot(pct_vals, emb_curves['both'], marker='D', color='purple', linewidth=2, label='Mixed (Add+Drop)')
-    ax1.plot(pct_vals, emb_curves['shuffle'], marker='^', color='green', linewidth=2, label='Shuffle Features')
+    ax1.plot(pct_vals, emb_curves['add'], marker='o', color='blue', linewidth=2, label='Add Edges')
+    ax1.plot(pct_vals, emb_curves['shuffle'], marker='^', color='green', linewidth=2, label='Shuffle Labels')
+    ax1.plot(pct_vals, emb_curves['all'], marker='D', color='purple', linewidth=2, label='All (Add+Drop+Shuffle)')
     ax1.set_xlabel('Perturbation (%)')
     ax1.set_ylabel('Cosine Similarity')
     ax1.set_title('Embedding Stability (Cosine Sim)')
@@ -174,10 +174,10 @@ def run_full_stability_analysis(graphs, X, clf, y, train_idx, test_idx, dim, see
     ax1.legend(loc='lower left')
     
     # Right: Accuracy Robustness
-    ax2.plot(pct_vals, acc_curves['add'], marker='o', color='blue', linewidth=2, label='Add Edges')
     ax2.plot(pct_vals, acc_curves['remove'], marker='s', color='red', linewidth=2, label='Drop Edges')
-    ax2.plot(pct_vals, acc_curves['both'], marker='D', color='purple', linewidth=2, label='Mixed (Add+Drop)')
-    ax2.plot(pct_vals, acc_curves['shuffle'], marker='^', color='green', linewidth=2, label='Shuffle Features')
+    ax2.plot(pct_vals, acc_curves['add'], marker='o', color='blue', linewidth=2, label='Add Edges')
+    ax2.plot(pct_vals, acc_curves['shuffle'], marker='^', color='green', linewidth=2, label='Shuffle Labels')
+    ax2.plot(pct_vals, acc_curves['all'], marker='D', color='purple', linewidth=2, label='All (Add+Drop+Shuffle)')
     ax2.set_xlabel('Perturbation (%)')
     ax2.set_ylabel('Classification Accuracy')
     ax2.set_title('Accuracy Robustness')
