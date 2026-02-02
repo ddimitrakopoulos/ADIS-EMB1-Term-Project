@@ -6,3 +6,8 @@ matplotlib==3.5.3
 umap-learn==0.5.3
 psutil==7.2.1
 python-dotenv==1.2.1
+torch==2.10.0
+torch-geometric==2.7.0
+
+# Note: torch==2.10.0 includes CUDA 12.8 support (cu128)
+# For TUDataset auto-download functionality

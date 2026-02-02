@@ -2,8 +2,8 @@ import time
 from karateclub import Graph2Vec
 from utils import mem_mb
 
-def compute_graph2vec_embeddings(graphs, dim, wl_iter, epochs, lr, seed):
-    print(f"\nGenerating Graph2Vec embeddings (dim={dim})...")
+def compute_graph2vec_embeddings(graphs, dim, wl_iter, epochs, lr, seed, attributed=False):
+    print(f"\nGenerating Graph2Vec embeddings (dim={dim}, attributed={attributed})...")
 
     mem_before = mem_mb()
     start = time.time()
@@ -13,7 +13,8 @@ def compute_graph2vec_embeddings(graphs, dim, wl_iter, epochs, lr, seed):
         wl_iterations=wl_iter,
         epochs=epochs,
         learning_rate=lr,
-        seed=seed
+        seed=seed,
+        attributed=attributed
     )
     g2v.fit(graphs)
     X = g2v.get_embedding()

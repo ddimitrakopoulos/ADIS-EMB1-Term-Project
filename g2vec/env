@@ -10,7 +10,7 @@ G2V_SEED=42
 # Classifier hyperparameters
 # ==================================================
 # SVM
-SVM_C=75
+SVM_C=1
 SVM_KERNEL=rbf
 SVM_GAMMA=scale
 SVM_MAX_ITER=3000
