@@ -1,0 +1,200 @@
+
+==================================================
+ SOLVER: lbfgs | C: 0.01
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2554 | Macro F1: 0.2478
+[Standard  ] Dim:  64 | Accuracy: 0.2954 | Macro F1: 0.2899
+[Standard  ] Dim: 256 | Accuracy: 0.2804 | Macro F1: 0.2772
+[Standard  ] Dim:  16 | Accuracy: 0.3312 | Macro F1: 0.3254
+[Standard  ] Dim:  64 | Accuracy: 0.3738 | Macro F1: 0.3697
+[Standard  ] Dim: 256 | Accuracy: 0.4196 | Macro F1: 0.4163
+
+==================================================
+ SOLVER: lbfgs | C: 0.1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2775 | Macro F1: 0.2735
+[Standard  ] Dim:  64 | Accuracy: 0.2812 | Macro F1: 0.2802
+[Standard  ] Dim: 256 | Accuracy: 0.2775 | Macro F1: 0.2754
+[Standard  ] Dim:  16 | Accuracy: 0.3450 | Macro F1: 0.3381
+[Standard  ] Dim:  64 | Accuracy: 0.3629 | Macro F1: 0.3597
+[Standard  ] Dim: 256 | Accuracy: 0.4200 | Macro F1: 0.4162
+
+==================================================
+ SOLVER: lbfgs | C: 1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2642 | Macro F1: 0.2605
+[Standard  ] Dim:  64 | Accuracy: 0.2808 | Macro F1: 0.2793
+[Standard  ] Dim: 256 | Accuracy: 0.2729 | Macro F1: 0.2715
+[Standard  ] Dim:  16 | Accuracy: 0.3342 | Macro F1: 0.3307
+[Standard  ] Dim:  64 | Accuracy: 0.3521 | Macro F1: 0.3497
+[Standard  ] Dim: 256 | Accuracy: 0.4167 | Macro F1: 0.4151
+
+==================================================
+ SOLVER: lbfgs | C: 10
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2525 | Macro F1: 0.2472
+[Standard  ] Dim:  64 | Accuracy: 0.2617 | Macro F1: 0.2598
+[Standard  ] Dim: 256 | Accuracy: 0.2792 | Macro F1: 0.2776
+[Standard  ] Dim:  16 | Accuracy: 0.3217 | Macro F1: 0.3164
+[Standard  ] Dim:  64 | Accuracy: 0.3404 | Macro F1: 0.3366
+[Standard  ] Dim: 256 | Accuracy: 0.4004 | Macro F1: 0.3975
+
+==================================================
+ SOLVER: lbfgs | C: 100
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2642 | Macro F1: 0.2616
+[Standard  ] Dim:  64 | Accuracy: 0.2829 | Macro F1: 0.2811
+[Standard  ] Dim: 256 | Accuracy: 0.2629 | Macro F1: 0.2612
+[Standard  ] Dim:  16 | Accuracy: 0.3408 | Macro F1: 0.3342
+[Standard  ] Dim:  64 | Accuracy: 0.3642 | Macro F1: 0.3624
+[Standard  ] Dim: 256 | Accuracy: 0.4092 | Macro F1: 0.4073
+
+==================================================
+ SOLVER: liblinear | C: 0.01
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2954 | Macro F1: 0.2875
+[Standard  ] Dim:  64 | Accuracy: 0.2938 | Macro F1: 0.2871
+[Standard  ] Dim: 256 | Accuracy: 0.2879 | Macro F1: 0.2812
+[Standard  ] Dim:  16 | Accuracy: 0.3146 | Macro F1: 0.3030
+[Standard  ] Dim:  64 | Accuracy: 0.3929 | Macro F1: 0.3857
+[Standard  ] Dim: 256 | Accuracy: 0.4204 | Macro F1: 0.4146
+
+==================================================
+ SOLVER: liblinear | C: 0.1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2596 | Macro F1: 0.2534
+[Standard  ] Dim:  64 | Accuracy: 0.2967 | Macro F1: 0.2935
+[Standard  ] Dim: 256 | Accuracy: 0.2929 | Macro F1: 0.2891
+[Standard  ] Dim:  16 | Accuracy: 0.3475 | Macro F1: 0.3389
+[Standard  ] Dim:  64 | Accuracy: 0.3896 | Macro F1: 0.3856
+[Standard  ] Dim: 256 | Accuracy: 0.4304 | Macro F1: 0.4267
+
+==================================================
+ SOLVER: liblinear | C: 1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2600 | Macro F1: 0.2560
+[Standard  ] Dim:  64 | Accuracy: 0.2725 | Macro F1: 0.2693
+[Standard  ] Dim: 256 | Accuracy: 0.2908 | Macro F1: 0.2886
+[Standard  ] Dim:  16 | Accuracy: 0.3408 | Macro F1: 0.3328
+[Standard  ] Dim:  64 | Accuracy: 0.3467 | Macro F1: 0.3430
+[Standard  ] Dim: 256 | Accuracy: 0.4375 | Macro F1: 0.4348
+
+==================================================
+ SOLVER: liblinear | C: 10
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2488 | Macro F1: 0.2456
+[Standard  ] Dim:  64 | Accuracy: 0.2621 | Macro F1: 0.2603
+[Standard  ] Dim: 256 | Accuracy: 0.2800 | Macro F1: 0.2784
+[Standard  ] Dim:  16 | Accuracy: 0.3283 | Macro F1: 0.3221
+[Standard  ] Dim:  64 | Accuracy: 0.3688 | Macro F1: 0.3638
+[Standard  ] Dim: 256 | Accuracy: 0.4167 | Macro F1: 0.4159
+
+==================================================
+ SOLVER: liblinear | C: 100
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2754 | Macro F1: 0.2717
+[Standard  ] Dim:  64 | Accuracy: 0.2671 | Macro F1: 0.2635
+[Standard  ] Dim: 256 | Accuracy: 0.2679 | Macro F1: 0.2658
+[Standard  ] Dim:  16 | Accuracy: 0.3408 | Macro F1: 0.3334
+[Standard  ] Dim:  64 | Accuracy: 0.3567 | Macro F1: 0.3533
+[Standard  ] Dim: 256 | Accuracy: 0.3921 | Macro F1: 0.3912
+
+==================================================
+ SOLVER: newton-cg | C: 0.01
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2558 | Macro F1: 0.2502
+[Standard  ] Dim:  64 | Accuracy: 0.3096 | Macro F1: 0.3040
+[Standard  ] Dim: 256 | Accuracy: 0.2787 | Macro F1: 0.2750
+[Standard  ] Dim:  16 | Accuracy: 0.3204 | Macro F1: 0.3159
+[Standard  ] Dim:  64 | Accuracy: 0.3842 | Macro F1: 0.3784
+[Standard  ] Dim: 256 | Accuracy: 0.4200 | Macro F1: 0.4164
+
+==================================================
+ SOLVER: newton-cg | C: 0.1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2387 | Macro F1: 0.2357
+[Standard  ] Dim:  64 | Accuracy: 0.2783 | Macro F1: 0.2764
+[Standard  ] Dim: 256 | Accuracy: 0.2825 | Macro F1: 0.2811
+[Standard  ] Dim:  16 | Accuracy: 0.3367 | Macro F1: 0.3287
+[Standard  ] Dim:  64 | Accuracy: 0.3771 | Macro F1: 0.3730
+[Standard  ] Dim: 256 | Accuracy: 0.4250 | Macro F1: 0.4215
+
+==================================================
+ SOLVER: newton-cg | C: 1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2500 | Macro F1: 0.2460
+[Standard  ] Dim:  64 | Accuracy: 0.2767 | Macro F1: 0.2746
+[Standard  ] Dim: 256 | Accuracy: 0.2825 | Macro F1: 0.2807
+[Standard  ] Dim:  16 | Accuracy: 0.3187 | Macro F1: 0.3095
+[Standard  ] Dim:  64 | Accuracy: 0.3504 | Macro F1: 0.3473
+[Standard  ] Dim: 256 | Accuracy: 0.4021 | Macro F1: 0.3995
+
+==================================================
+ SOLVER: newton-cg | C: 10
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2775 | Macro F1: 0.2756
+[Standard  ] Dim:  64 | Accuracy: 0.2583 | Macro F1: 0.2570
+[Standard  ] Dim: 256 | Accuracy: 0.2725 | Macro F1: 0.2701
+[Standard  ] Dim:  16 | Accuracy: 0.3271 | Macro F1: 0.3204
+[Standard  ] Dim:  64 | Accuracy: 0.3683 | Macro F1: 0.3650
+[Standard  ] Dim: 256 | Accuracy: 0.3937 | Macro F1: 0.3930
+
+==================================================
+ SOLVER: newton-cg | C: 100
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2767 | Macro F1: 0.2745
+[Standard  ] Dim:  64 | Accuracy: 0.2804 | Macro F1: 0.2785
+[Standard  ] Dim: 256 | Accuracy: 0.2604 | Macro F1: 0.2578
+[Standard  ] Dim:  16 | Accuracy: 0.3521 | Macro F1: 0.3484
+[Standard  ] Dim:  64 | Accuracy: 0.3554 | Macro F1: 0.3532
+[Standard  ] Dim: 256 | Accuracy: 0.3746 | Macro F1: 0.3720
+
+==================================================
+ SOLVER: saga | C: 0.01
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2700 | Macro F1: 0.2669
+[Standard  ] Dim:  64 | Accuracy: 0.3067 | Macro F1: 0.3015
+[Standard  ] Dim: 256 | Accuracy: 0.2825 | Macro F1: 0.2786
+[Standard  ] Dim:  16 | Accuracy: 0.3404 | Macro F1: 0.3282
+[Standard  ] Dim:  64 | Accuracy: 0.3571 | Macro F1: 0.3515
+[Standard  ] Dim: 256 | Accuracy: 0.4071 | Macro F1: 0.4040
+
+==================================================
+ SOLVER: saga | C: 0.1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2554 | Macro F1: 0.2499
+[Standard  ] Dim:  64 | Accuracy: 0.2762 | Macro F1: 0.2733
+[Standard  ] Dim: 256 | Accuracy: 0.2800 | Macro F1: 0.2781
+[Standard  ] Dim:  16 | Accuracy: 0.3321 | Macro F1: 0.3288
+[Standard  ] Dim:  64 | Accuracy: 0.3608 | Macro F1: 0.3576
+[Standard  ] Dim: 256 | Accuracy: 0.4229 | Macro F1: 0.4194
+
+==================================================
+ SOLVER: saga | C: 1
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2425 | Macro F1: 0.2380
+[Standard  ] Dim:  64 | Accuracy: 0.2792 | Macro F1: 0.2759
+[Standard  ] Dim: 256 | Accuracy: 0.2787 | Macro F1: 0.2751
+[Standard  ] Dim:  16 | Accuracy: 0.3375 | Macro F1: 0.3348
+[Standard  ] Dim:  64 | Accuracy: 0.3546 | Macro F1: 0.3522
+[Standard  ] Dim: 256 | Accuracy: 0.4100 | Macro F1: 0.4065
+
+==================================================
+ SOLVER: saga | C: 10
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2525 | Macro F1: 0.2489
+[Standard  ] Dim:  64 | Accuracy: 0.2725 | Macro F1: 0.2711
+[Standard  ] Dim: 256 | Accuracy: 0.2725 | Macro F1: 0.2690
+[Standard  ] Dim:  16 | Accuracy: 0.3275 | Macro F1: 0.3227
+[Standard  ] Dim:  64 | Accuracy: 0.3562 | Macro F1: 0.3515
+[Standard  ] Dim: 256 | Accuracy: 0.3971 | Macro F1: 0.3963
+
+==================================================
+ SOLVER: saga | C: 100
+==================================================
+[Standard  ] Dim:  16 | Accuracy: 0.2454 | Macro F1: 0.2420
+[Standard  ] Dim:  64 | Accuracy: 0.2633 | Macro F1: 0.2617
+[Standard  ] Dim: 256 | Accuracy: 0.2733 | Macro F1: 0.2707
+[Standard  ] Dim:  16 | Accuracy: 0.3321 | Macro F1: 0.3270
+[Standard  ] Dim:  64 | Accuracy: 0.3400 | Macro F1: 0.3387
+[Standard  ] Dim: 256 | Accuracy: 0.3996 | Macro F1: 0.3977
