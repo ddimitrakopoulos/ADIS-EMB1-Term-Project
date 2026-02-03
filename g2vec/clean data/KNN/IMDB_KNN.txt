@@ -1,0 +1,300 @@
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: uniform | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5398 | F1: 0.5403
+[Attributed] Dim:  16 | Acc: 0.4090 | F1: 0.4069
+[Standard  ] Dim:  64 | Acc: 0.4350 | F1: 0.4335
+[Attributed] Dim:  64 | Acc: 0.4145 | F1: 0.4099
+[Standard  ] Dim: 256 | Acc: 0.4218 | F1: 0.4204
+[Attributed] Dim: 256 | Acc: 0.3945 | F1: 0.3878
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: uniform | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5412 | F1: 0.5400
+[Attributed] Dim:  16 | Acc: 0.3890 | F1: 0.3881
+[Standard  ] Dim:  64 | Acc: 0.4380 | F1: 0.4358
+[Attributed] Dim:  64 | Acc: 0.4052 | F1: 0.4041
+[Standard  ] Dim: 256 | Acc: 0.4480 | F1: 0.4474
+[Attributed] Dim: 256 | Acc: 0.3938 | F1: 0.3933
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: uniform | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5152 | F1: 0.5156
+[Attributed] Dim:  16 | Acc: 0.3718 | F1: 0.3691
+[Standard  ] Dim:  64 | Acc: 0.4365 | F1: 0.4347
+[Attributed] Dim:  64 | Acc: 0.3973 | F1: 0.3952
+[Standard  ] Dim: 256 | Acc: 0.4198 | F1: 0.4164
+[Attributed] Dim: 256 | Acc: 0.3862 | F1: 0.3807
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: uniform | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5442 | F1: 0.5430
+[Attributed] Dim:  16 | Acc: 0.3977 | F1: 0.3972
+[Standard  ] Dim:  64 | Acc: 0.4540 | F1: 0.4527
+[Attributed] Dim:  64 | Acc: 0.3913 | F1: 0.3902
+[Standard  ] Dim: 256 | Acc: 0.4157 | F1: 0.4149
+[Attributed] Dim: 256 | Acc: 0.4170 | F1: 0.4164
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: uniform | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5208 | F1: 0.5213
+[Attributed] Dim:  16 | Acc: 0.4000 | F1: 0.3955
+[Standard  ] Dim:  64 | Acc: 0.4087 | F1: 0.4072
+[Attributed] Dim:  64 | Acc: 0.4060 | F1: 0.4026
+[Standard  ] Dim: 256 | Acc: 0.4253 | F1: 0.4247
+[Attributed] Dim: 256 | Acc: 0.3855 | F1: 0.3776
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: distance | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5315 | F1: 0.5312
+[Attributed] Dim:  16 | Acc: 0.3927 | F1: 0.3923
+[Standard  ] Dim:  64 | Acc: 0.4298 | F1: 0.4277
+[Attributed] Dim:  64 | Acc: 0.4005 | F1: 0.4002
+[Standard  ] Dim: 256 | Acc: 0.4422 | F1: 0.4407
+[Attributed] Dim: 256 | Acc: 0.4188 | F1: 0.4181
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: distance | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.4953 | F1: 0.4959
+[Attributed] Dim:  16 | Acc: 0.4012 | F1: 0.3977
+[Standard  ] Dim:  64 | Acc: 0.4423 | F1: 0.4412
+[Attributed] Dim:  64 | Acc: 0.4082 | F1: 0.4050
+[Standard  ] Dim: 256 | Acc: 0.4420 | F1: 0.4402
+[Attributed] Dim: 256 | Acc: 0.4202 | F1: 0.4176
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: distance | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5238 | F1: 0.5221
+[Attributed] Dim:  16 | Acc: 0.3985 | F1: 0.3975
+[Standard  ] Dim:  64 | Acc: 0.4513 | F1: 0.4483
+[Attributed] Dim:  64 | Acc: 0.3932 | F1: 0.3925
+[Standard  ] Dim: 256 | Acc: 0.4532 | F1: 0.4517
+[Attributed] Dim: 256 | Acc: 0.4047 | F1: 0.4039
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: distance | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5358 | F1: 0.5374
+[Attributed] Dim:  16 | Acc: 0.3967 | F1: 0.3946
+[Standard  ] Dim:  64 | Acc: 0.4527 | F1: 0.4486
+[Attributed] Dim:  64 | Acc: 0.4072 | F1: 0.4023
+[Standard  ] Dim: 256 | Acc: 0.4502 | F1: 0.4494
+[Attributed] Dim: 256 | Acc: 0.4182 | F1: 0.4159
+
+==================================================================
+ METRIC: euclidean | WEIGHTS: distance | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5508 | F1: 0.5506
+[Attributed] Dim:  16 | Acc: 0.4263 | F1: 0.4256
+[Standard  ] Dim:  64 | Acc: 0.4468 | F1: 0.4453
+[Attributed] Dim:  64 | Acc: 0.4025 | F1: 0.4012
+[Standard  ] Dim: 256 | Acc: 0.4405 | F1: 0.4397
+[Attributed] Dim: 256 | Acc: 0.4165 | F1: 0.4160
+
+==================================================================
+ METRIC: cosine | WEIGHTS: uniform | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5272 | F1: 0.5281
+[Attributed] Dim:  16 | Acc: 0.4157 | F1: 0.4122
+[Standard  ] Dim:  64 | Acc: 0.4357 | F1: 0.4335
+[Attributed] Dim:  64 | Acc: 0.4050 | F1: 0.4031
+[Standard  ] Dim: 256 | Acc: 0.4325 | F1: 0.4323
+[Attributed] Dim: 256 | Acc: 0.3880 | F1: 0.3835
+
+==================================================================
+ METRIC: cosine | WEIGHTS: uniform | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5327 | F1: 0.5308
+[Attributed] Dim:  16 | Acc: 0.3918 | F1: 0.3910
+[Standard  ] Dim:  64 | Acc: 0.4290 | F1: 0.4284
+[Attributed] Dim:  64 | Acc: 0.3978 | F1: 0.3969
+[Standard  ] Dim: 256 | Acc: 0.4350 | F1: 0.4338
+[Attributed] Dim: 256 | Acc: 0.3988 | F1: 0.3983
+
+==================================================================
+ METRIC: cosine | WEIGHTS: uniform | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5065 | F1: 0.5061
+[Attributed] Dim:  16 | Acc: 0.4097 | F1: 0.4091
+[Standard  ] Dim:  64 | Acc: 0.4292 | F1: 0.4282
+[Attributed] Dim:  64 | Acc: 0.4282 | F1: 0.4263
+[Standard  ] Dim: 256 | Acc: 0.4297 | F1: 0.4294
+[Attributed] Dim: 256 | Acc: 0.4222 | F1: 0.4217
+
+==================================================================
+ METRIC: cosine | WEIGHTS: uniform | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5173 | F1: 0.5180
+[Attributed] Dim:  16 | Acc: 0.4295 | F1: 0.4280
+[Standard  ] Dim:  64 | Acc: 0.4382 | F1: 0.4375
+[Attributed] Dim:  64 | Acc: 0.4192 | F1: 0.4188
+[Standard  ] Dim: 256 | Acc: 0.4385 | F1: 0.4376
+[Attributed] Dim: 256 | Acc: 0.4090 | F1: 0.4079
+
+==================================================================
+ METRIC: cosine | WEIGHTS: uniform | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5103 | F1: 0.5094
+[Attributed] Dim:  16 | Acc: 0.4182 | F1: 0.4167
+[Standard  ] Dim:  64 | Acc: 0.4335 | F1: 0.4314
+[Attributed] Dim:  64 | Acc: 0.4297 | F1: 0.4280
+[Standard  ] Dim: 256 | Acc: 0.4395 | F1: 0.4383
+[Attributed] Dim: 256 | Acc: 0.4085 | F1: 0.4059
+
+==================================================================
+ METRIC: cosine | WEIGHTS: distance | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5387 | F1: 0.5374
+[Attributed] Dim:  16 | Acc: 0.4252 | F1: 0.4248
+[Standard  ] Dim:  64 | Acc: 0.4450 | F1: 0.4425
+[Attributed] Dim:  64 | Acc: 0.4117 | F1: 0.4106
+[Standard  ] Dim: 256 | Acc: 0.4455 | F1: 0.4404
+[Attributed] Dim: 256 | Acc: 0.4133 | F1: 0.4129
+
+==================================================================
+ METRIC: cosine | WEIGHTS: distance | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5287 | F1: 0.5289
+[Attributed] Dim:  16 | Acc: 0.4252 | F1: 0.4237
+[Standard  ] Dim:  64 | Acc: 0.4593 | F1: 0.4580
+[Attributed] Dim:  64 | Acc: 0.4182 | F1: 0.4170
+[Standard  ] Dim: 256 | Acc: 0.4602 | F1: 0.4596
+[Attributed] Dim: 256 | Acc: 0.4193 | F1: 0.4176
+
+==================================================================
+ METRIC: cosine | WEIGHTS: distance | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5460 | F1: 0.5443
+[Attributed] Dim:  16 | Acc: 0.4120 | F1: 0.4105
+[Standard  ] Dim:  64 | Acc: 0.4353 | F1: 0.4302
+[Attributed] Dim:  64 | Acc: 0.4317 | F1: 0.4307
+[Standard  ] Dim: 256 | Acc: 0.4413 | F1: 0.4371
+[Attributed] Dim: 256 | Acc: 0.4128 | F1: 0.4118
+
+==================================================================
+ METRIC: cosine | WEIGHTS: distance | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.4858 | F1: 0.4849
+[Attributed] Dim:  16 | Acc: 0.4195 | F1: 0.4157
+[Standard  ] Dim:  64 | Acc: 0.4360 | F1: 0.4320
+[Attributed] Dim:  64 | Acc: 0.4138 | F1: 0.4114
+[Standard  ] Dim: 256 | Acc: 0.4332 | F1: 0.4314
+[Attributed] Dim: 256 | Acc: 0.4272 | F1: 0.4261
+
+==================================================================
+ METRIC: cosine | WEIGHTS: distance | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5002 | F1: 0.5002
+[Attributed] Dim:  16 | Acc: 0.4205 | F1: 0.4192
+[Standard  ] Dim:  64 | Acc: 0.4558 | F1: 0.4551
+[Attributed] Dim:  64 | Acc: 0.4250 | F1: 0.4238
+[Standard  ] Dim: 256 | Acc: 0.4597 | F1: 0.4581
+[Attributed] Dim: 256 | Acc: 0.4165 | F1: 0.4147
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: uniform | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5080 | F1: 0.5081
+[Attributed] Dim:  16 | Acc: 0.4248 | F1: 0.4241
+[Standard  ] Dim:  64 | Acc: 0.4233 | F1: 0.4201
+[Attributed] Dim:  64 | Acc: 0.4315 | F1: 0.4306
+[Standard  ] Dim: 256 | Acc: 0.4363 | F1: 0.4343
+[Attributed] Dim: 256 | Acc: 0.4353 | F1: 0.4338
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: uniform | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5458 | F1: 0.5426
+[Attributed] Dim:  16 | Acc: 0.4292 | F1: 0.4279
+[Standard  ] Dim:  64 | Acc: 0.4508 | F1: 0.4465
+[Attributed] Dim:  64 | Acc: 0.4210 | F1: 0.4204
+[Standard  ] Dim: 256 | Acc: 0.4343 | F1: 0.4295
+[Attributed] Dim: 256 | Acc: 0.4270 | F1: 0.4255
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: uniform | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5292 | F1: 0.5286
+[Attributed] Dim:  16 | Acc: 0.4200 | F1: 0.4185
+[Standard  ] Dim:  64 | Acc: 0.4603 | F1: 0.4587
+[Attributed] Dim:  64 | Acc: 0.4408 | F1: 0.4393
+[Standard  ] Dim: 256 | Acc: 0.4572 | F1: 0.4561
+[Attributed] Dim: 256 | Acc: 0.4383 | F1: 0.4366
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: uniform | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5277 | F1: 0.5246
+[Attributed] Dim:  16 | Acc: 0.4217 | F1: 0.4206
+[Standard  ] Dim:  64 | Acc: 0.4453 | F1: 0.4417
+[Attributed] Dim:  64 | Acc: 0.4245 | F1: 0.4231
+[Standard  ] Dim: 256 | Acc: 0.4492 | F1: 0.4433
+[Attributed] Dim: 256 | Acc: 0.4333 | F1: 0.4322
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: uniform | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.4857 | F1: 0.4827
+[Attributed] Dim:  16 | Acc: 0.4310 | F1: 0.4306
+[Standard  ] Dim:  64 | Acc: 0.4417 | F1: 0.4355
+[Attributed] Dim:  64 | Acc: 0.4305 | F1: 0.4300
+[Standard  ] Dim: 256 | Acc: 0.4225 | F1: 0.4168
+[Attributed] Dim: 256 | Acc: 0.4170 | F1: 0.4156
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: distance | K: 3
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.4848 | F1: 0.4843
+[Attributed] Dim:  16 | Acc: 0.4260 | F1: 0.4241
+[Standard  ] Dim:  64 | Acc: 0.4582 | F1: 0.4575
+[Attributed] Dim:  64 | Acc: 0.4298 | F1: 0.4292
+[Standard  ] Dim: 256 | Acc: 0.4768 | F1: 0.4755
+[Attributed] Dim: 256 | Acc: 0.4432 | F1: 0.4428
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: distance | K: 5
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.4805 | F1: 0.4786
+[Attributed] Dim:  16 | Acc: 0.4262 | F1: 0.4259
+[Standard  ] Dim:  64 | Acc: 0.4197 | F1: 0.4155
+[Attributed] Dim:  64 | Acc: 0.4315 | F1: 0.4303
+[Standard  ] Dim: 256 | Acc: 0.4173 | F1: 0.4116
+[Attributed] Dim: 256 | Acc: 0.4270 | F1: 0.4244
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: distance | K: 7
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5260 | F1: 0.5220
+[Attributed] Dim:  16 | Acc: 0.4412 | F1: 0.4399
+[Standard  ] Dim:  64 | Acc: 0.4585 | F1: 0.4491
+[Attributed] Dim:  64 | Acc: 0.4368 | F1: 0.4352
+[Standard  ] Dim: 256 | Acc: 0.4460 | F1: 0.4392
+[Attributed] Dim: 256 | Acc: 0.4352 | F1: 0.4333
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: distance | K: 11
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5737 | F1: 0.5735
+[Attributed] Dim:  16 | Acc: 0.4382 | F1: 0.4372
+[Standard  ] Dim:  64 | Acc: 0.4702 | F1: 0.4678
+[Attributed] Dim:  64 | Acc: 0.4393 | F1: 0.4379
+[Standard  ] Dim: 256 | Acc: 0.4515 | F1: 0.4489
+[Attributed] Dim: 256 | Acc: 0.4350 | F1: 0.4330
+
+==================================================================
+ METRIC: manhattan | WEIGHTS: distance | K: 15
+==================================================================
+[Standard  ] Dim:  16 | Acc: 0.5353 | F1: 0.5295
+[Attributed] Dim:  16 | Acc: 0.4313 | F1: 0.4300
+[Standard  ] Dim:  64 | Acc: 0.4540 | F1: 0.4496
+[Attributed] Dim:  64 | Acc: 0.4382 | F1: 0.4376
+[Standard  ] Dim: 256 | Acc: 0.4467 | F1: 0.4387
+[Attributed] Dim: 256 | Acc: 0.4300 | F1: 0.4285
