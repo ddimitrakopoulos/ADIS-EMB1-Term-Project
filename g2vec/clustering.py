@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import umap
 from sklearn.cluster import KMeans, SpectralClustering, AgglomerativeClustering, DBSCAN
-from sklearn.mixture import GaussianMixture
 from sklearn.manifold import TSNE
 from sklearn.metrics import adjusted_rand_score
 
@@ -29,12 +28,6 @@ def run_clustering(X, y, seed, plot_3d=False):
     labels_agglomerative = agglomerative.fit_predict(X)
     ari_agglomerative = adjusted_rand_score(y, labels_agglomerative)
     print(f"Agglomerative Clustering ARI: {ari_agglomerative:.4f}")
-
-    # Gaussian Mixture Models (GMM)
-    gmm = GaussianMixture(n_components=num_classes, random_state=seed, n_init=10)
-    labels_gmm = gmm.fit_predict(X)
-    ari_gmm = adjusted_rand_score(y, labels_gmm)
-    print(f"GMM ARI: {ari_gmm:.4f}")
 
     # DBSCAN (density-based clustering)
     # Use heuristic for eps based on data scale
@@ -79,6 +72,5 @@ def run_clustering(X, y, seed, plot_3d=False):
         'kmeans': ari_kmeans,
         'spectral': ari_spectral,
         'agglomerative': ari_agglomerative,
-        'gmm': ari_gmm,
         'dbscan': ari_dbscan
     }

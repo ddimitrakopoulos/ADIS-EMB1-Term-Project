@@ -149,7 +149,6 @@ if args.mode in ["cluster", "all"]:
         'kmeans': [],
         'spectral': [],
         'agglomerative': [],
-        'gmm': [],
         'dbscan': []
     }
     for i in range(args.repeat):
