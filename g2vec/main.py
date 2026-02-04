@@ -145,17 +145,30 @@ if args.mode in ["classify", "all"]:
         print("=" * 50)
 
 if args.mode in ["cluster", "all"]:
-    ari_kmeans_scores = []
-    ari_spectral_scores = []
+    clustering_results = {
+        'kmeans': [],
+        'spectral': [],
+        'agglomerative': [],
+        'gmm': [],
+        'dbscan': []
+    }
     for i in range(args.repeat):
         this_seed = SEED + i
-        ari_kmeans, ari_spectral = run_clustering(X, y, this_seed, plot_3d=args.__dict__.get('3d', False))
-        ari_kmeans_scores.append(ari_kmeans)
-        ari_spectral_scores.append(ari_spectral)
+        results = run_clustering(X, y, this_seed, plot_3d=args.__dict__.get('3d', False))
+        for key in clustering_results.keys():
+            clustering_results[key].append(results[key])
+    
     if args.repeat > 1:
         print(f"\n===== Averaged Clustering Results =====")
-        print(f"KMeans ARI over {args.repeat} runs: {np.mean(ari_kmeans_scores):.4f} ± {np.std(ari_kmeans_scores):.4f}")
-        print(f"Spectral ARI over {args.repeat} runs: {np.mean(ari_spectral_scores):.4f} ± {np.std(ari_spectral_scores):.4f}")
+        print(f"Number of runs       : {args.repeat}")
+        print("-" * 50)
+        for key, scores in clustering_results.items():
+            print(f"{key.capitalize():<20} ARI: {np.mean(scores):.4f} ± {np.std(scores):.4f}")
+        print("=" * 50)
+    elif args.repeat == 1:
+        print(f"\n===== Clustering Results Summary =====")
+        for key, scores in clustering_results.items():
+            print(f"{key.capitalize():<20} ARI: {scores[0]:.4f}")
         print("=" * 40)
 
 if args.mode in ["stability", "all"]:
