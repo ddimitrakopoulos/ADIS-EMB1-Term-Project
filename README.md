@@ -16,6 +16,9 @@ The main goals of this project are to:
 - Analyze **computational efficiency and resource usage**
 - Evaluate **clustering quality**
 - Study **stability under structural perturbations**
+- Investigate the effect of **embedding dimensionality** for highlighting accuracy–efficiency trade-offs.
+- Examine the influence of **method-specific hyperparameters** on embedding quality and downstream task performance.
+
 
 ## Graph Embedding Methods
 
