@@ -14,6 +14,31 @@ dependencies:
   - networkx>=2.6,<3.0
   - scikit-learn>=1.7,<1.8
   - pillow>=12.0,<13.0
+  - mpmath
+  - pyparsing
+  - packaging
+  - six
+  - python-dateutil
+  - pytz
+  - fonttools
+  - kiwisolver
+  - decorator
+  - filelock
+  - colorama
+  - cycler
+  - fsspec
+  - joblib
+  - threadpoolctl
+  - wrapt
+  - certifi
+  - charset-normalizer
+  - idna
+  - urllib3
+  - markupsafe
+  - sympy
+  - Levenshtein
+  - python-Levenshtein
+  - psutil
 
   # PyTorch
   - pytorch==2.2.0
@@ -31,3 +56,4 @@ dependencies:
       - python-louvain>=0.16,<0.17
       - requests>=2.32,<2.33
       - RapidFuzz>=3.14,<3.15
+      - NetLSD==1.0.2
