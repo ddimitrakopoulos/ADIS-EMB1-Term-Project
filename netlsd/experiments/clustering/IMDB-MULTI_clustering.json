@@ -1,0 +1,63 @@
+{
+    "dataset": "IMDB-MULTI",
+    "dims": {
+        "2": {
+            "dim": 2,
+            "kmeans_mean_ari": 0.00807502528790581,
+            "kmeans_std_ari": 0.0002719299032309808,
+            "spectral_mean_ari": 0.017818651265923045,
+            "spectral_std_ari": 0.006402580426858336
+        },
+        "4": {
+            "dim": 4,
+            "kmeans_mean_ari": 0.023095744255644077,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.04395874087581178,
+            "spectral_std_ari": 0.0
+        },
+        "8": {
+            "dim": 8,
+            "kmeans_mean_ari": 0.015663680291862915,
+            "kmeans_std_ari": 8.15308536323673e-05,
+            "spectral_mean_ari": 0.04381203157840066,
+            "spectral_std_ari": 0.0
+        },
+        "16": {
+            "dim": 16,
+            "kmeans_mean_ari": 0.015270969491362292,
+            "kmeans_std_ari": 0.0003219018051511376,
+            "spectral_mean_ari": 0.04381203157840066,
+            "spectral_std_ari": 0.0
+        },
+        "32": {
+            "dim": 32,
+            "kmeans_mean_ari": 0.015270969491362292,
+            "kmeans_std_ari": 0.0003219018051511376,
+            "spectral_mean_ari": 0.04348418739941109,
+            "spectral_std_ari": 6.938893903907228e-18
+        },
+        "64": {
+            "dim": 64,
+            "kmeans_mean_ari": 0.015270969491362292,
+            "kmeans_std_ari": 0.0003219018051511376,
+            "spectral_mean_ari": 0.043773338368684085,
+            "spectral_std_ari": 6.938893903907228e-18
+        },
+        "128": {
+            "dim": 128,
+            "kmeans_mean_ari": 0.015259322226557667,
+            "kmeans_std_ari": 0.0003175668769386887,
+            "spectral_mean_ari": 0.04329096541653977,
+            "spectral_std_ari": 6.938893903907228e-18
+        },
+        "256": {
+            "dim": 256,
+            "kmeans_mean_ari": 0.015259322226557667,
+            "kmeans_std_ari": 0.0003175668769386887,
+            "spectral_mean_ari": 0.04741845082913499,
+            "spectral_std_ari": 6.938893903907228e-18
+        }
+    },
+    "started_at": "2026-02-03T19:17:13.439030",
+    "finished_at": "2026-02-03T19:46:43.664719"
+}

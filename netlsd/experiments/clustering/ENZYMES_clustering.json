@@ -1,0 +1,63 @@
+{
+    "dataset": "ENZYMES",
+    "dims": {
+        "2": {
+            "dim": 2,
+            "kmeans_mean_ari": 0.0003479890932528183,
+            "kmeans_std_ari": 1.8094031720016563e-05,
+            "spectral_mean_ari": 0.0041407463420278685,
+            "spectral_std_ari": 0.0
+        },
+        "4": {
+            "dim": 4,
+            "kmeans_mean_ari": 0.010455873084437507,
+            "kmeans_std_ari": 0.00017260269295367084,
+            "spectral_mean_ari": 0.013082259085521582,
+            "spectral_std_ari": 0.0
+        },
+        "8": {
+            "dim": 8,
+            "kmeans_mean_ari": 0.011145812479509085,
+            "kmeans_std_ari": 0.0006107942827290837,
+            "spectral_mean_ari": 0.016394759437465264,
+            "spectral_std_ari": 3.469446951953614e-18
+        },
+        "16": {
+            "dim": 16,
+            "kmeans_mean_ari": 0.011594220432304337,
+            "kmeans_std_ari": 0.00014020441034614582,
+            "spectral_mean_ari": 0.01246713690331694,
+            "spectral_std_ari": 0.0
+        },
+        "32": {
+            "dim": 32,
+            "kmeans_mean_ari": 0.011525367527888663,
+            "kmeans_std_ari": 0.0001242886706485419,
+            "spectral_mean_ari": 0.029553543377239665,
+            "spectral_std_ari": 3.469446951953614e-18
+        },
+        "64": {
+            "dim": 64,
+            "kmeans_mean_ari": 0.011593060461569833,
+            "kmeans_std_ari": 0.00013880690580849074,
+            "spectral_mean_ari": 0.03212227524812822,
+            "spectral_std_ari": 0.0
+        },
+        "128": {
+            "dim": 128,
+            "kmeans_mean_ari": 0.011570193596144085,
+            "kmeans_std_ari": 0.00013870839149314102,
+            "spectral_mean_ari": 0.017244578145525,
+            "spectral_std_ari": 0.0
+        },
+        "256": {
+            "dim": 256,
+            "kmeans_mean_ari": 0.011587343745213396,
+            "kmeans_std_ari": 0.0001391350596738612,
+            "spectral_mean_ari": 0.009875718486420116,
+            "spectral_std_ari": 0.0
+        }
+    },
+    "started_at": "2026-02-03T19:12:30.278514",
+    "finished_at": "2026-02-03T19:16:21.466441"
+}

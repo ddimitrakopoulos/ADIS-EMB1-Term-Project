@@ -1,0 +1,63 @@
+{
+    "dataset": "MUTAG",
+    "dims": {
+        "2": {
+            "dim": 2,
+            "kmeans_mean_ari": 0.49614592169639016,
+            "kmeans_std_ari": 1.1102230246251565e-16,
+            "spectral_mean_ari": 0.5174645128995352,
+            "spectral_std_ari": 0.0
+        },
+        "4": {
+            "dim": 4,
+            "kmeans_mean_ari": 0.267375357876457,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.267375357876457,
+            "spectral_std_ari": 0.0
+        },
+        "8": {
+            "dim": 8,
+            "kmeans_mean_ari": 0.30202891403397336,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.3258404808517252,
+            "spectral_std_ari": 0.0
+        },
+        "16": {
+            "dim": 16,
+            "kmeans_mean_ari": 0.36963163340489097,
+            "kmeans_std_ari": 5.551115123125783e-17,
+            "spectral_mean_ari": 0.3258404808517252,
+            "spectral_std_ari": 0.0
+        },
+        "32": {
+            "dim": 32,
+            "kmeans_mean_ari": 0.30202891403397336,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.3258404808517252,
+            "spectral_std_ari": 0.0
+        },
+        "64": {
+            "dim": 64,
+            "kmeans_mean_ari": 0.30202891403397336,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.31346850547169763,
+            "spectral_std_ari": 5.551115123125783e-17
+        },
+        "128": {
+            "dim": 128,
+            "kmeans_mean_ari": 0.30202891403397336,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.31346850547169763,
+            "spectral_std_ari": 5.551115123125783e-17
+        },
+        "256": {
+            "dim": 256,
+            "kmeans_mean_ari": 0.30202891403397336,
+            "kmeans_std_ari": 0.0,
+            "spectral_mean_ari": 0.31346850547169763,
+            "spectral_std_ari": 5.551115123125783e-17
+        }
+    },
+    "started_at": "2026-02-03T19:09:43.250965",
+    "finished_at": "2026-02-03T19:11:01.150306"
+}
