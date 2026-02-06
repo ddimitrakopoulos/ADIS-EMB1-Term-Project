@@ -42,7 +42,8 @@ python main.py --dataset <DATASET_PATH> [--mode <MODE>] [--classifier <CLASSIFIE
 - `--mode`: Which experiment to run. Options: `classify`, `cluster`, `stability`, `all` (default: `all`)
 - `--classifier`: Classifier to use. Options: `svm`, `logreg`, `mlp`, `knn` (default: `svm`)
 - `--dim`: NetLSD embedding dimension (default: `128`)
-
+- `--perturb`: Edge perturbation ratio for stability analysis (e.g., 0.05 = 5% edges). Use all for multiple ratios (default: 0.05)
+- `--visualize`: Visualize clustering results (tsne, umap)
 ### Example
 
 ```bash
