@@ -21,19 +21,20 @@ parser.add_argument("--mode", type=str, default="all",
                     help="Which experiment to run")
 
 parser.add_argument("--classifier", type=str, default="svm",
-                    choices=["svm", "logreg", "mlp", "knn"],
+                    choices=["svm", "logreg", "mlp", "knn", "all"],
                     help="Classifier to use (for classification mode)")
 
 parser.add_argument("--dim", type=int, default=250,
                     help="NetLSD embedding dimension")
 
-parser.add_argument("--perturb", type=float, default=0.05,
-                    help="Edge perturbation ratio for stability analysis (e.g. 0.05 = 5%% edges)")
+parser.add_argument("--perturb", type=str, default="0.05",
+                    help="Edge perturbation ratio for stability analysis (e.g. 0.05 = 5%% edges). Use 'all' for multiple ratios.")
 
 parser.add_argument("--visualize", action="store_true",
                     help="Visualize clustering results (scatter plots, etc.)")
 
 args = parser.parse_args()
+
 
 # ==================================================
 # Load dataset name
@@ -49,11 +50,11 @@ print(f"\nLoading dataset: {dataset_name}")
 if args.mode in ["classify", "all"]:
     print("\nRunning classification experiment...")
     run_classification_experiment(dataset_name=dataset_name, dataset_path=dataset_path, dim=args.dim, classifier=args.classifier)
-
+        
 if args.mode in ["cluster", "all"]:
     print("\nRunning clustering experiment...")
     run_clustering_experiment(dataset_name=dataset_name, dataset_path=dataset_path, dim=args.dim, do_visualize=args.visualize)
-
+    
 if args.mode in ["stability", "all"]:
     print("\nRunning stability experiment...")
     run_stability(datasets=[dataset_name], dim=args.dim, dataset_path=dataset_path, edge_perturb=args.perturb)
