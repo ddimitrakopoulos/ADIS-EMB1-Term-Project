@@ -1,7 +1,3 @@
-# ==================================================
-# NetLSD Stability Analysis: MUTAG, ENZYMES, IMDB-MULTI
-# ==================================================
-
 import os
 import time
 import random
@@ -16,16 +12,19 @@ from sklearn.metrics import accuracy_score
 
 from karateclub import NetLSD
 
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+import netlsd 
+
 # --------------------------------------------------
 # Load TUDataset from raw files
 # --------------------------------------------------
+# -----------------------------
+# Load dataset and (manual TUDataset format) convert to NetworkX
+# -----------------------------
 
 def load_dataset(dataset_name, root="data"):
-    """
-    Loads a graph dataset manually from the provided TUDataset files
-    and converts it to NetworkX objects, which KarateClub’s NetLSD expects.
-    Supports MUTAG, ENZYMES, and IMDB-MULTI formats.
-    """
     dataset_dir = os.path.join(root)
     edge_file = os.path.join(dataset_dir, f"{dataset_name}_A.txt")
     indicator_file = os.path.join(dataset_dir, f"{dataset_name}_graph_indicator.txt")
@@ -34,29 +33,44 @@ def load_dataset(dataset_name, root="data"):
     # Optional files
     node_label_file = os.path.join(dataset_dir, f"{dataset_name}_node_labels.txt")
     node_attr_file = os.path.join(dataset_dir, f"{dataset_name}_node_attributes.txt")
+    edge_label_file = os.path.join(dataset_dir, f"{dataset_name}_edge_labels.txt")
 
     # Read edges
     edges = []
-    with open(edge_file, "r") as f:
-        for line in f:
-            u, v = map(int, line.strip().split(","))
-            edges.append((u, v))
+    edge_labels = None
+
+    if os.path.exists(edge_label_file):
+        with open(edge_file, "r") as ef, open(edge_label_file, "r") as elf:
+            for e_line, l_line in zip(ef, elf):
+                u, v = map(int, e_line.strip().split(","))
+                label = int(l_line.strip())
+                edges.append((u, v, label))
+    else:
+        with open(edge_file, "r") as f:
+            for line in f:
+                u, v = map(int, line.strip().split(","))
+                edges.append((u, v))
 
     # Read graph indicators
     with open(indicator_file, "r") as f:
-        indicators = [int(line.strip()) for line in f]
-    num_graphs = max(indicators)
+        indicators = [int(line.strip()) for line in f] 
+    num_graphs = max(indicators) 
 
     # Build graphs
-    graphs = [nx.Graph() for _ in range(num_graphs)]
+    # nx.Graph() is for undirected graphs, so add_edge doesnt include both entries of the same graph
+    graphs = [nx.Graph() for _ in range(num_graphs)] 
     node_id_to_graph = {}
     for node_id, graph_id in enumerate(indicators, start=1):
-        graphs[graph_id - 1].add_node(node_id)
+        graphs[graph_id - 1].add_node(node_id) 
         node_id_to_graph[node_id] = graphs[graph_id - 1]
 
-    # Add edges
-    for u, v in edges:
-        node_id_to_graph[u].add_edge(u, v)
+    # Add edges (with optional labels)
+    if len(edges) > 0 and len(edges[0]) == 3:
+        for u, v, label in edges:
+            node_id_to_graph[u].add_edge(u, v, label=label)
+    else:
+        for u, v in edges:
+            node_id_to_graph[u].add_edge(u, v) 
 
     # Relabel nodes to consecutive integers starting from 0
     graphs = [nx.convert_node_labels_to_integers(g) for g in graphs]
@@ -65,7 +79,7 @@ def load_dataset(dataset_name, root="data"):
     with open(label_file, "r") as f:
         labels = [int(line.strip()) for line in f]
 
-    # Optional: attach node labels or attributes if available
+    # Attach node labels or attributes if available
     if os.path.exists(node_label_file):
         with open(node_label_file, "r") as f:
             node_labels = [line.strip() for line in f]
@@ -87,34 +101,78 @@ def load_dataset(dataset_name, root="data"):
     return graphs, np.array(labels)
 
 
-# --------------------------------------------------
-# NetLSD embeddings
-# --------------------------------------------------
-def generate_netlsd_embeddings(graphs, dim):
+# -----------------------------
+# Generate NetLSD embeddings
+# -----------------------------
+
+def generate_netlsd_embeddings(graphs, dim=250):
+    import numpy as np
+    import tracemalloc
+    import time
+    from karateclub import NetLSD
+
+    num_graphs = len(graphs)
+    embeddings = np.zeros((num_graphs, dim), dtype=np.float32)  
+
+    # Start memory tracking
     tracemalloc.start()
-    start = time.time()
+    start_time = time.time()
+
+    # Instantiate a single NetLSD model (scale_steps=dim is constant across graphs)
+    model = NetLSD(scale_steps=dim) #, approximations=...)
+
+    for i, g in enumerate(graphs):
+        num_nodes = g.number_of_nodes()
+
+        if num_nodes < 6:
+            continue
+
+        # model.infer to avoid creating a new model and calling fit every time
+        embeddings[i] = model.infer([g])[0]
+
+    total_time = time.time() - start_time
+
+    # Memory usage
+    embed_mem = embeddings.nbytes / 1024**2  # MB
+    _, peak_mem = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    return (
+        embeddings,
+        total_time,
+        embed_mem,
+        peak_mem / 1024**2
+    )
+
+def generate_netlsd_embeddings_wave(graphs, dim=250, kernel="wave"):
 
     embeddings = []
+    tracemalloc.start()
+    start_time = time.time()
 
     for g in graphs:
-        if g.number_of_nodes() < 2:
+        n = g.number_of_nodes()
+        if n < 6:
             embeddings.append(np.zeros(dim))
             continue
 
-        #approximations = min(200, max(1, g.number_of_nodes() // 2))
-        model = NetLSD(scale_steps=dim) #, approximations=approximations)
-        model.fit([g])
-        embeddings.append(model.get_embedding()[0])
+        # compute NetLSD descriptor using selected kernel
+        if kernel == "heat":
+            emb = netlsd.heat(g, timescales=np.logspace(-2, 2, dim)) # default approximations = 200
+        elif kernel == "wave":
+            emb = netlsd.wave(g, timescales=np.logspace(-2, 2, dim)) # default approximations = 200
+        else:
+            raise ValueError("Unknown kernel. Use 'heat' or 'wave'.")
+        
+        embeddings.append(emb)
 
-    X = np.vstack(embeddings)
-
-    total_time = time.time() - start
-    mem = X.nbytes / 1024**2
-    _, peak = tracemalloc.get_traced_memory()
+    total_time = time.time() - start_time
+    X = np.array(embeddings)
+    embed_mem = X.nbytes / 1024**2
+    _, peak_mem = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
-    return X, total_time, mem, peak / 1024**2
-
+    return X, total_time, embed_mem, peak_mem / 1024**2
 
 # --------------------------------------------------
 # Graph perturbations
@@ -130,7 +188,7 @@ def perturb_edges(G, ratio=0.05):
 
     k = max(1, int(len(edges) * ratio))
 
-    # remove
+    # remove 
     for _ in range(min(k, len(edges))):
         e = random.choice(edges)
         if Gp.has_edge(*e):
@@ -145,36 +203,35 @@ def perturb_edges(G, ratio=0.05):
     
     return Gp
 
-# ==================================================
-# Alternative -> Perturb a graph for stability analysis
-# ==================================================
+def perturb_add(G, ratio=0.05):
+    """Only add edges"""
+    Gp = deepcopy(G)
+    nodes = list(Gp.nodes())
+    edges = list(Gp.edges())
+    if len(nodes) < 2:
+        return Gp
 
-def perturb_graph(G, edge_perturb_ratio=0.1, shuffle_node_labels=False):
-    G_perturbed = deepcopy(G)
-    num_edges = G_perturbed.number_of_edges()
-    num_remove = int(edge_perturb_ratio * num_edges)
-    edges = list(G_perturbed.edges())
-    edges_to_remove = random.sample(edges, min(num_remove, len(edges)))
-    G_perturbed.remove_edges_from(edges_to_remove)
-    nodes = list(G_perturbed.nodes())
-    added = 0 
-    '''because of variable added, if k edges are removed, exactly k are added
-    at perturb_edges this doesnt get checked, so when trying to add a random edge
-    if this edge already exists at GP, it will continue to the next iteration
-    so the peturbed graph's size is roughly similar to the original's
-    and much more noise is introduced
-    '''
-    while added < num_remove:
+    k = max(1, int(len(edges) * ratio))
+    for _ in range(k):
         u, v = random.sample(nodes, 2)
-        if not G_perturbed.has_edge(u, v):
-            G_perturbed.add_edge(u, v)
-            added += 1
-    if shuffle_node_labels and nx.get_node_attributes(G_perturbed, "label"):
-        labels = list(nx.get_node_attributes(G_perturbed, "label").values())
-        random.shuffle(labels)
-        for i, node in enumerate(G_perturbed.nodes()):
-            G_perturbed.nodes[node]["label"] = labels[i]
-    return G_perturbed
+        if not Gp.has_edge(u, v):
+            Gp.add_edge(u, v)
+    return Gp
+
+def perturb_remove(G, ratio=0.05):
+    """Only remove edges"""
+    Gp = deepcopy(G)
+    edges = list(Gp.edges())
+    if len(edges) == 0:
+        return Gp
+
+    k = max(1, int(len(edges) * ratio))
+    for _ in range(min(k, len(edges))):
+        e = random.choice(edges)
+        if Gp.has_edge(*e):
+            Gp.remove_edge(*e)
+        edges.remove(e)
+    return Gp
 
 
 ''' edge_jaccard: 
@@ -189,97 +246,145 @@ def edge_jaccard(G, Gp):
         return 1.0
     return len(E1 & E2) / len(E1 | E2)
 
-
 # --------------------------------------------------
 # Stability analysis
 # --------------------------------------------------
 
-def stability_analysis(graphs, X_orig, y, dim, edge_perturb):
-    X_pert = []
-    jaccards = []
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
-    for G in graphs:
-        Gp = perturb_edges(G, edge_perturb)
-        #Gp = perturb_graph(G, edge_perturb)
-        jaccards.append(edge_jaccard(G, Gp))
-
-        if Gp.number_of_nodes() < 2:
-            X_pert.append(np.zeros(dim))
-            continue
-
-        #approximations = min(200, max(1, Gp.number_of_nodes() // 2))
-        model = NetLSD(scale_steps=dim) #, approximations=approximations)
-        model.fit([Gp])
-        X_pert.append(model.get_embedding()[0])
-
-    X_pert = np.vstack(X_pert)
-
-    # ---- embedding stability ----
-    cosine = []
-    rel_l2 = []
-
-    for x, y_ in zip(X_orig, X_pert):
-        '''cosine similarity:
-        x → original NetLSD embedding
-        y → perturbed embedding
-        1 → embeddings point in the same direction → very stable (preffered)
-        0 → embeddings are orthogonal → completely different
-        -1 → embeddings are opposite
-        It's important cause NetLSD embeddings are directional vectors.
-        Cosine similarity shows how well the “shape” of the graph is preserved.
-        '''
-        cosine.append(cosine_similarity(x.reshape(1,-1), y_.reshape(1,-1))[0,0])
-        '''Relative L2 Distance:
-        Computes Euclidean distance between the original and perturbed embeddings.
-        Normalized by the magnitude of the original embedding to get relative change.
-        Captures magnitude differences, unlike cosine which only captures direction.
-        Helps detect if embeddings shrink/expand under perturbation.
-        0 → no change, Higher → bigger perturbation effect
-        '''
-        rel_l2.append(np.linalg.norm(x - y_) / (np.linalg.norm(x) + 1e-9))
-
-    # ---- classification stability ----
-    ''' note to self:
-    introduce more classifiers and take the average accuracy 
-    though classification results at task A didnt show much 
-    difference between different classifiers
-    '''
-    clf = SVC(kernel="linear") # no train/test split, purely evaluating stability 
-    # --> introducing split would mess with generalization noise and hide true stability effects
-    clf.fit(X_orig, y)
-    acc_orig = accuracy_score(y, clf.predict(X_orig))
-    acc_pert = accuracy_score(y, clf.predict(X_pert))
-
-    return {
-        "edge_jaccard": np.mean(jaccards),
-        "cosine": np.mean(cosine),
-        "rel_l2": np.mean(rel_l2),
-        "acc_orig": acc_orig,
-        "acc_pert": acc_pert,
-        "acc_drop": acc_orig - acc_pert
+def stability_analysis(graphs, X_orig, y, dim, edge_perturb=0.05):
+    perturbations = {
+        "both": perturb_edges,
+        "add": perturb_add,
+        "remove": perturb_remove
     }
 
+    # Task A classifiers
+    SVM_C = 75
+    LOGREG_C = 3
+    MLP_HIDDEN_LAYER_SIZES = (512, 256)
+    MLP_MAX_ITER = 2000
+    MLP_EARLY_STOPPING = True
+    KNN_N_NEIGHBORS = 5
+
+    classifiers = {
+        "svm": Pipeline([
+            ("scaler", StandardScaler()),
+            ("svm", SVC(kernel="rbf", C=SVM_C, probability=True, random_state=42))
+        ]),
+        "logreg": Pipeline([
+            ("scaler", StandardScaler()),
+            ("lr", LogisticRegression(C=LOGREG_C, max_iter=500, random_state=42))
+        ]),
+        "mlp": Pipeline([
+            ("scaler", StandardScaler()),
+            ("mlp", MLPClassifier(hidden_layer_sizes=MLP_HIDDEN_LAYER_SIZES,
+                                  max_iter=MLP_MAX_ITER,
+                                  early_stopping=MLP_EARLY_STOPPING,
+                                  random_state=42))
+        ]),
+        "knn": Pipeline([
+            ("scaler", StandardScaler()),
+            ("knn", KNeighborsClassifier(n_neighbors=KNN_N_NEIGHBORS))
+        ])
+    }
+
+    results = {}
+
+    for name, perturb_func in perturbations.items():
+        X_pert = []
+        jaccards = []
+
+        # -----------------------------
+        # Perturb graphs & compute embeddings
+        # -----------------------------
+        for G in graphs:
+            Gp = perturb_func(G, edge_perturb)
+
+            # Edge Jaccard similarity
+            jacc = edge_jaccard(G, Gp)
+            jaccards.append(jacc)
+
+            if Gp.number_of_nodes() < 2:
+                X_pert.append(np.zeros(dim))
+                continue
+
+            #try:
+            model = NetLSD(scale_steps=dim)
+            model.fit([Gp])
+            X_pert.append(model.get_embedding()[0])
+            #except ValueError:
+            #   X_pert.append(np.zeros(dim))
+
+        X_pert = np.vstack(X_pert)
+
+        # -----------------------------
+        # Embedding stability
+        # -----------------------------
+        cosine = []
+        rel_l2 = []
+        for x, y_ in zip(X_orig, X_pert):
+            cosine.append(cosine_similarity(x.reshape(1, -1), y_.reshape(1, -1))[0,0])
+            rel_l2.append(np.linalg.norm(x - y_) / (np.linalg.norm(x) + 1e-9))
+
+        # -----------------------------
+        # Classification stability
+        # -----------------------------
+        acc_orig_list = []
+        acc_pert_list = []
+
+        for clf_name, clf in classifiers.items():
+            clf.fit(X_orig, y)
+            acc_orig_list.append(accuracy_score(y, clf.predict(X_orig)))
+            acc_pert_list.append(accuracy_score(y, clf.predict(X_pert)))
+
+        # Store results for this perturbation type
+        results[name] = {
+            "edge_jaccard": np.mean(jaccards),
+            "cosine": np.mean(cosine),
+            "rel_l2": np.mean(rel_l2),
+            "acc_orig_avg": np.mean(acc_orig_list),
+            "acc_pert_avg": np.mean(acc_pert_list),
+            "acc_drop_avg": np.mean(np.array(acc_orig_list) - np.array(acc_pert_list))
+        }
+
+    return results
 
 # --------------------------------------------------
 # Run experiment
 # --------------------------------------------------
 
 def run_stability(datasets, dataset_path, dim=250, edge_perturb=0.05):
+    if isinstance(edge_perturb, str) and edge_perturb.lower() == "all":
+        perturb_values = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
+    else:
+        perturb_values = [float(edge_perturb)]
+
     for name in datasets:
         print(f"\n===== Dataset: {name} =====")
 
         graphs, labels = load_dataset(name, dataset_path)
         X, t, mem, peak = generate_netlsd_embeddings(graphs, dim)
+        #X, t, mem, peak = generate_netlsd_embeddings_wave(graphs, dim, kernel="wave") --> for wave kernel experiments
 
-        print(f"Embeddings: {t:.2f}s | mem {mem:.2f} MB")
+        print(f"Embeddings: {t:.2f}s | peak_mem {peak:.2f} MB")
 
-        metrics = stability_analysis(
-            graphs, X, labels, dim, edge_perturb
-        )
+        for perturb in perturb_values:
+            print(f"\n--- Edge perturbation ratio: {perturb:.2f} ---")
 
-        print(f"Edge Jaccard        : {metrics['edge_jaccard']:.3f}")
-        print(f"Cosine similarity   : {metrics['cosine']:.4f}")
-        print(f"Relative L2 change  : {metrics['rel_l2']:.4f}")
-        print(f"Accuracy (orig)     : {metrics['acc_orig']:.4f}")
-        print(f"Accuracy (perturbed): {metrics['acc_pert']:.4f}")
-        print(f"Accuracy drop       : {metrics['acc_drop']:.4f}")
+            metrics = stability_analysis(
+                graphs, X, labels, dim, edge_perturb=perturb
+            )
+
+            for perturb_type, metrics in metrics.items():
+                print(f"\nPerturbation: {perturb_type}")
+                print(f"Edge Jaccard        : {metrics['edge_jaccard']:.3f}")
+                print(f"Cosine similarity   : {metrics['cosine']:.4f}")
+                print(f"Relative L2 change  : {metrics['rel_l2']:.4f}")
+                print(f"Accuracy (orig)     : {metrics['acc_orig_avg']:.4f}")
+                print(f"Accuracy (perturbed): {metrics['acc_pert_avg']:.4f}")
+                print(f"Accuracy drop       : {metrics['acc_drop_avg']:.4f}")
+
