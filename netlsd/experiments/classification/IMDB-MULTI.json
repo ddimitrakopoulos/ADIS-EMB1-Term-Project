@@ -1,0 +1,122 @@
+{
+    "2": {
+        "classification_metrics": {
+            "accuracy": 0.4126749999999999,
+            "f1": 0.3823408567317964,
+            "auc": 0.5809521875,
+            "train_time": 0.2282680732011795,
+            "inference_time": 0.0073467582464218145
+        },
+        "embedding_stats": {
+            "total_time": 4.061256408691406,
+            "embed_mem": 0.011444091796875,
+            "peak_mem": 1.6006879806518555,
+            "avg_time_per_graph": 0.0027075042724609374
+        }
+    },
+    "4": {
+        "classification_metrics": {
+            "accuracy": 0.45099166666666674,
+            "f1": 0.4329852426790242,
+            "auc": 0.6197550833333335,
+            "train_time": 0.24058844566345214,
+            "inference_time": 0.007093186974525451
+        },
+        "embedding_stats": {
+            "total_time": 3.6912167072296143,
+            "embed_mem": 0.02288818359375,
+            "peak_mem": 1.213973045349121,
+            "avg_time_per_graph": 0.002460811138153076
+        }
+    },
+    "8": {
+        "classification_metrics": {
+            "accuracy": 0.45109999999999995,
+            "f1": 0.43085471512445583,
+            "auc": 0.6193068125,
+            "train_time": 0.25918391823768616,
+            "inference_time": 0.007802448868751526
+        },
+        "embedding_stats": {
+            "total_time": 3.800588369369507,
+            "embed_mem": 0.0457763671875,
+            "peak_mem": 1.8099365234375,
+            "avg_time_per_graph": 0.0025337255795796713
+        }
+    },
+    "16": {
+        "classification_metrics": {
+            "accuracy": 0.4477,
+            "f1": 0.42720018935374415,
+            "auc": 0.6142091875,
+            "train_time": 0.2741027909517289,
+            "inference_time": 0.013680415749549866
+        },
+        "embedding_stats": {
+            "total_time": 4.030059576034546,
+            "embed_mem": 0.091552734375,
+            "peak_mem": 1.6903905868530273,
+            "avg_time_per_graph": 0.0026867063840230305
+        }
+    },
+    "32": {
+        "classification_metrics": {
+            "accuracy": 0.44914166666666666,
+            "f1": 0.4287756716140835,
+            "auc": 0.6169109583333333,
+            "train_time": 0.28038318455219263,
+            "inference_time": 0.010165295004844666
+        },
+        "embedding_stats": {
+            "total_time": 4.3469460010528564,
+            "embed_mem": 0.18310546875,
+            "peak_mem": 2.7554807662963867,
+            "avg_time_per_graph": 0.002897964000701904
+        }
+    },
+    "64": {
+        "classification_metrics": {
+            "accuracy": 0.4470333333333334,
+            "f1": 0.4271603886112763,
+            "auc": 0.6150821666666667,
+            "train_time": 0.3020161628723144,
+            "inference_time": 0.010156214833259581
+        },
+        "embedding_stats": {
+            "total_time": 4.803978443145752,
+            "embed_mem": 0.3662109375,
+            "peak_mem": 1.9433326721191406,
+            "avg_time_per_graph": 0.003202652295430501
+        }
+    },
+    "128": {
+        "classification_metrics": {
+            "accuracy": 0.4464916666666667,
+            "f1": 0.4256521439624621,
+            "auc": 0.6147382083333333,
+            "train_time": 0.37053684949874877,
+            "inference_time": 0.013114216923713683
+        },
+        "embedding_stats": {
+            "total_time": 6.024162530899048,
+            "embed_mem": 0.732421875,
+            "peak_mem": 0.3511323928833008,
+            "avg_time_per_graph": 0.004016108353932698
+        }
+    },
+    "256": {
+        "classification_metrics": {
+            "accuracy": 0.44586666666666663,
+            "f1": 0.42557462187315037,
+            "auc": 0.6113163333333334,
+            "train_time": 0.4513106077909469,
+            "inference_time": 0.017092111110687255
+        },
+        "embedding_stats": {
+            "total_time": 8.396165132522583,
+            "embed_mem": 1.46484375,
+            "peak_mem": 0.9521541595458984,
+            "avg_time_per_graph": 0.005597443421681722
+        }
+    }
+}
