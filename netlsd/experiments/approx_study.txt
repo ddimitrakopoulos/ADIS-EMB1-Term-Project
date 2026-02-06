@@ -1,0 +1,197 @@
+===============================
+	MUTAG --> {2, 4, 8, 12, 15, 20}
+===============================
+
+emb_size = 128 
+approx = 2
+Total embedding time (s)       : 1.24
+accuracy: 0.8408552631578945 
+approx = 4
+Total embedding time (s)       : 1.01
+accuracy: 0.8577631578947367
+approx = 8
+Total embedding time (s)       : 0.97
+accuracy: 0.8442763157894735
+approx = 12
+Total embedding time (s)       : 0.91
+ accuracy: 0.8448026315789472
+approx = 15
+Total embedding time (s)       : 0.89
+accuracy: 0.8409210526315787
+approx = 20
+Total embedding time (s)       : 0.92
+accuracy: 0.8409210526315787
+
+emb_size = 256 
+approx = 2
+Total embedding time (s)       : 1.44
+accuracy: 0.8424342105263155
+approx = 4
+Total embedding time (s)       : 1.25
+accuracy: 0.856644736842105
+approx = 8
+Total embedding time (s)       : 1.34
+accuracy: 0.8404605263157892
+approx = 12
+Total embedding time (s)       : 1.34
+accuracy: 0.8487499999999998
+approx = 15
+Total embedding time (s)       : 1.32
+accuracy: 0.841973684210526
+approx = 20
+Total embedding time (s)       : 1.36
+accuracy: 0.841973684210526
+
+===============================
+	IMDB-MULTI --> {4, 12, 15, 20, 25, 30}
+===============================
+
+emb_size = 128 
+approx = 2 --> ERROR
+approx = 4
+Total embedding time (s)       : 7.53
+accuracy: 0.44350833333333334
+approx = 12
+Total embedding time (s)       : 7.10
+accuracy: 0.44709999999999994
+approx = 15
+Total embedding time (s)       : 6.82
+accuracy: 0.4458
+approx = 20
+Total embedding time (s)       : 7.95
+accuracy: 0.4466083333333333
+approx = 25
+Total embedding time (s)       : 7.16
+accuracy: 0.44761666666666666
+approx = 30
+Total embedding time (s)       : 7.23
+accuracy: 0.44424166666666665
+
+emb_size = 256
+approx = 2 --> ERROR
+approx = 4
+Total embedding time (s)       : 10.08
+accuracy: 0.44086666666666674
+approx = 12
+Total embedding time (s)       : 10.84
+accuracy: 0.4476
+approx = 15
+Total embedding time (s)       : 9.41
+accuracy: 0.4459833333333333
+approx = 20
+Total embedding time (s)       : 9.52
+accuracy: 0.44459999999999994
+approx = 25
+Total embedding time (s)       : 9.40
+accuracy: 0.4472583333333333
+approx = 30
+Total embedding time (s)       : 9.45
+accuracy: 0.44255
+
+===============================
+	ENZYMES --> {15, 20, 30, 40, 50 , 60, 70}
+===============================
+
+emb_size = 128 
+
+approx = 15
+Total embedding time (s)       : 4.26
+accuracy: 0.29258333333333336
+approx = 20
+Total embedding time (s)       : 3.74
+accuracy: 0.2984791666666667
+approx = 30
+Total embedding time (s)       : 3.66
+accuracy: 0.28820833333333334
+approx = 40
+Total embedding time (s)       : 3.35
+accuracy: 0.2924583333333333
+approx = 50
+Total embedding time (s)       : 3.50
+ accuracy: 0.29172916666666665
+approx = 60
+Total embedding time (s)       : 3.65
+accuracy: 0.292
+approx = 70
+Total embedding time (s)       : 3.41
+accuracy: 0.29133333333333333
+
+emb_size = 256
+
+approx = 15
+Total embedding time (s)       : 5.12
+accuracy: 0.29079166666666667
+
+approx = 20
+Total embedding time (s)       : 4.95
+accuracy: 0.29852083333333335
+approx = 30
+Total embedding time (s)       : 4.82
+accuracy: 0.2901250000000001
+approx = 40
+Total embedding time (s)       : 4.45
+accuracy: 0.2931666666666667
+approx = 50
+Total embedding time (s)       : 4.65
+accuracy: 0.29408333333333336
+approx = 60
+Total embedding time (s)       : 4.82
+accuracy: 0.29341666666666666
+approx = 70
+Total embedding time (s)       : 4.85
+accuracy: 0.29425
+
+================================
+	REDDIT-MULTI-12K (avg nodes: 391.41) --> {80, 90, 100, 200, 300, 400}
+================================
+
+
+=== Embedding size: 128 ===
+Approximation: 80
+Embedding time: 4017.74s | Mem: 5.82MB | Peak: 71.16MB
+Results: 'AVERAGE': {'accuracy': 0.36624737945492664, 'f1': 0.30102078665938475, 'auc': 0.7862137055644854}} 
+Approximation: 90
+Embedding time: 4084.38s | Mem: 5.82MB | Peak: 93.27MB
+Results: 'AVERAGE': {'accuracy': 0.3692872117400419, 'f1': 0.3037008693285485, 'auc': 0.7835249839717557}}
+Approximation: 100
+Embedding time: 3844.62s | Mem: 5.82MB | Peak: 142.47MB
+Results: 'AVERAGE': {'accuracy': 0.37536687631027255, 'f1': 0.31242563463695966, 'auc': 0.7874761302387632}}
+Approximation: 200
+Embedding time: 4667.06s | Mem: 5.82MB | Peak: 286.95MB
+Results: 'AVERAGE': {'accuracy': 0.3712248322147651, 'f1': 0.3065493321467167, 'auc': 0.7880239188158287}}
+Approximation: 300
+Embedding time: 5248.48s | Mem: 5.82MB | Peak: 945.04MB
+Results:  'AVERAGE': {'accuracy': 0.3818658280922431, 'f1': 0.314370911280917, 'auc': 0.792851585044023}}
+
+=== Embedding size: 256 ===
+Approximation: 80
+Embedding time: 3908.98s | Mem: 11.65MB | Peak: 48.19MB
+Results: 'AVERAGE': {'accuracy': 0.3715423302598491, 'f1': 0.3052881962804259, 'auc': 0.7898138995487993}}
+Approximation: 90
+Embedding time: 4104.85s | Mem: 11.65MB | Peak: 70.96MB
+Results: 'AVERAGE': {'accuracy': 0.37395222129086336, 'f1': 0.31048213680921605, 'auc': 0.7873840835472963}}        
+Approximation: 100
+Embedding time: 4019.89s | Mem: 11.65MB | Peak: 119.85MB
+Results: 'AVERAGE': {'accuracy': 0.37604777870913664, 'f1': 0.31198981492192557, 'auc': 0.7866514853572075}}
+Approximation: 200
+Embedding time: 5895.04s | Mem: 11.64MB | Peak: 100.23MB
+Results: 'AVERAGE': {'accuracy': 0.3687080536912752, 'f1': 0.29805161225703475, 'auc': 0.7792583554503242}}
+Approximation: 300
+Embedding time: 6759.70s | Mem: 11.64MB | Peak: 131.21MB
+Results: 'AVERAGE': {'accuracy': 0.3777265100671141, 'f1': 0.30973210190987455, 'auc': 0.7883414745390482}}
+Approximation: 400
+Embedding time: 7146.86s | Mem: 11.65MB | Peak: 197.79MB
+Results:  'AVERAGE': {'accuracy': 0.38343815513626833, 'f1': 0.31934656597580585, 'auc': 0.791942471333228}}
+
+emb_size = 512
+Approximation: 80
+Embedding time: 4458.97s | Mem: 23.29MB | Peak: 371.45MB
+Results: 'AVERAGE': {'accuracy': 0.3706498951781971, 'f1': 0.30548761892754184, 'auc': 0.788065178715306}}
+
+Approximation: 90
+Embedding time: 4446.20s | Mem: 23.29MB | Peak: 1020.28MB
+Results: 'AVERAGE': {'accuracy': 0.3721174004192872, 'f1': 0.3078929850355348, 'auc': 0.7860137476899995}}
+
+Approximation: 100
+Embedding time: 4363.16s | Mem: 23.29MB | Peak: 152.38MB
+Results: 'AVERAGE': {'accuracy': 0.3767295597484277, 'f1': 0.3138513599981301, 'auc': 0.7867015880216168}}
